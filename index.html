@@ -27,21 +27,44 @@
     <footer class="p-4 text-center text-xs text-slate-500">
         &copy; 2026 Marvel Project
     </footer>
+<!-- Tombol Interaktif -->
+<button onclick="showWelcome()" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all duration-200">
+  Ubah Status
+</button>
 
-    <!-- JavaScript untuk Interaksi -->
-    <script>
-        let statusAktif = false;
-        function ubahStatus() {
-            statusAktif = !statusAktif;
-            const textElement = document.getElementById('infoText');
-            if(statusAktif) {
-                textElement.innerText = "Status: Berhasil Terhubung ke Sistem! 🚀";
-                textElement.classList.add("text-green-400");
-            } else {
-                textElement.innerText = "Klik tombol di bawah untuk mengubah status teks secara langsung!";
-                textElement.classList.remove("text-green-400");
-            }
-        }
-    </script>
-</body>
-</html>
+<!-- Elemen Animasi Popup (Modal) -->
+<div id="welcomeModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300 z-50 p-4">
+  <div id="modalContent" class="bg-slate-900 border border-slate-700 text-white p-6 rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300 max-w-sm w-full text-center">
+    <div class="text-4xl mb-3">✨</div>
+    <h3 class="text-xl font-bold text-blue-400 mb-2">Selamat Datang di Web Marvel!</h3>
+    <p class="text-slate-300 text-sm mb-5">Website modern berbasis mobile Anda kini memiliki animasi interaktif.</p>
+    <button onclick="closeWelcome()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-semibold transition-colors">
+      Tutup
+    </button>
+  </div>
+</div>
+
+<!-- Skrip JavaScript untuk Menjalankan Animasi -->
+<script>
+  function showWelcome() {
+    const modal = document.getElementById('welcomeModal');
+    const content = document.getElementById('modalContent');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      content.classList.remove('scale-90');
+      content.classList.add('scale-100');
+    }, 10);
+  }
+
+  function closeWelcome() {
+    const modal = document.getElementById('welcomeModal');
+    const content = document.getElementById('modalContent');
+    modal.classList.add('opacity-0');
+    content.classList.remove('scale-100');
+    content.classList.add('scale-90');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+</script>
