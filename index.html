@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Marvel Pro - Advanced Web</title>
-  <!-- Tailwind CSS untuk Desain Modern -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-900 text-white min-h-screen flex flex-col justify-between">
@@ -14,7 +13,6 @@
     <h1 class="text-2xl font-bold text-blue-400">MAESTRO MARVEL</h1>
     <p class="text-sm text-slate-400 mb-4">Website Modern Berbasis Mobile</p>
     
-    <!-- Menu Navigasi -->
     <nav class="flex justify-center gap-4 sm:gap-6 text-sm font-medium border-t border-slate-700 pt-3">
       <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors">Beranda</button>
       <button onclick="switchTab('karakter')" id="btn-karakter" class="text-slate-300 hover:text-white transition-colors">Karakter</button>
@@ -26,87 +24,95 @@
   <!-- Konten Utama -->
   <main class="p-6 max-w-md mx-auto w-full flex-grow flex flex-col items-center justify-center">
     
-    <!-- 1. Konten Beranda (Pengertian & Penjelasan Mendalam Marvel) -->
+    <!-- 1. Beranda -->
     <div id="content-beranda" class="tab-content bg-slate-800 p-6 rounded-2xl shadow-xl text-left w-full border border-slate-700">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Selamat Datang di Dunia Marvel</h2>
-      
-      <!-- Kotak Pengertian Marvel Lebih Detail -->
       <div class="space-y-3 mb-5">
         <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
           <h3 class="font-bold text-blue-300 mb-1 text-sm">🌌 Apa itu Marvel?</h3>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Marvel adalah waralaba media dan alam semesta fiktif Amerika yang berpusat pada kisah pahlawan super ciptaan Marvel Comics. Mulai dari komik legendaris hingga fenomena global <strong>Marvel Cinematic Universe (MCU)</strong>, Marvel telah menjadi ikon hiburan modern terbesar di dunia.
+            Marvel adalah waralaba media dan alam semesta fiktif yang berpusat pada kisah pahlawan super ciptaan Marvel Comics serta fenomena global <strong>Marvel Cinematic Universe (MCU)</strong>.
           </p>
         </div>
         <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
-          <h3 class="font-bold text-blue-300 mb-1 text-sm">⚡ Karakter & Cerita</h3>
+          <h3 class="font-bold text-blue-300 mb-1 text-sm">⚡ Fitur Baru</h3>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Menampilkan berbagai figur ikonik seperti Iron Man sang miliarder jenius, Spider-Man pahlawan ramah lingkungan, hingga Thor dewa petir dari Asgard, yang berjuang bersama melawan kejahatan kosmik.
+            Kini Anda bisa mencari karakter, melihat detail kekuatan, dan menambahkan pahlawan favorit langsung ke daftar khusus!
           </p>
         </div>
       </div>
-
       <div class="text-center">
-        <p class="text-slate-300 text-xs mb-3">Klik tombol di bawah untuk mencoba fitur interaktif!</p>
         <button onclick="showWelcome()" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all duration-200 text-sm">
           Ubah Status
         </button>
       </div>
     </div>
 
-    <!-- 2. Konten Karakter (Dengan Animasi Gerak pada Foto) -->
+    <!-- 2. Karakter (Dilengkapi Search & Pencarian) -->
     <div id="content-karakter" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left">
-      <h2 class="text-xl font-bold mb-4 text-center text-blue-400">Daftar Karakter</h2>
-      <div class="space-y-3">
-        
+      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Daftar Karakter</h2>
+      
+      <!-- Kolom Pencarian -->
+      <div class="mb-4">
+        <input type="text" id="searchInput" onkeyup="filterCharacters()" placeholder="Cari pahlawan (cth: Iron Man)..." class="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+      </div>
+
+      <div id="characterList" class="space-y-3">
         <!-- Karakter 1 -->
-        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center gap-3">
-          <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150" alt="Iron Man" class="w-14 h-14 rounded-lg object-cover border border-slate-700 shrink-0 transition-transform duration-300 transform hover:scale-110 hover:rotate-2 shadow-lg">
-          <div>
-            <h3 class="font-bold text-blue-300 text-sm">Iron Man</h3>
-            <p class="text-xs text-slate-400">Milyarder jenius dengan baju zirah berteknologi tinggi.</p>
+        <div class="char-card bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="iron man" onclick="showDetail('Iron Man', 'Miliarder jenius pencipta teknologi zirah canggih.', 'Kekuatan: Teknologi & Kecerdasan Jenius', 'https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150')">
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150" alt="Iron Man" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
+            <div>
+              <h3 class="font-bold text-blue-300 text-sm">Iron Man</h3>
+              <p class="text-[11px] text-slate-400">Teknologi & Armor Besi</p>
+            </div>
           </div>
+          <button onclick="event.stopPropagation(); addFavorite('Iron Man')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
         </div>
 
         <!-- Karakter 2 -->
-        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center gap-3">
-          <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150" alt="Spider-Man" class="w-14 h-14 rounded-lg object-cover border border-slate-700 shrink-0 transition-transform duration-300 transform hover:scale-110 hover:rotate-2 shadow-lg">
-          <div>
-            <h3 class="font-bold text-blue-300 text-sm">Spider-Man</h3>
-            <p class="text-xs text-slate-400">Pahlawan super ramah dari lingkungan sekitar.</p>
+        <div class="char-card bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="spider-man" onclick="showDetail('Spider-Man', 'Pahlawan ramah lingkungan dengan kemampuan laba-laba.', 'Kekuatan: Kelincahan & Laba-laba', 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150')">
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150" alt="Spider-Man" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
+            <div>
+              <h3 class="font-bold text-blue-300 text-sm">Spider-Man</h3>
+              <p class="text-[11px] text-slate-400">Manusia Laba-laba</p>
+            </div>
           </div>
+          <button onclick="event.stopPropagation(); addFavorite('Spider-Man')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
         </div>
 
         <!-- Karakter 3 -->
-        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center gap-3">
-          <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150" alt="Thor" class="w-14 h-14 rounded-lg object-cover border border-slate-700 shrink-0 transition-transform duration-300 transform hover:scale-110 hover:rotate-2 shadow-lg">
-          <div>
-            <h3 class="font-bold text-blue-300 text-sm">Thor</h3>
-            <p class="text-xs text-slate-400">Dewa petir dari Asgard dengan palu sakti.</p>
+        <div class="char-card bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="thor" onclick="showDetail('Thor', 'Dewa petir dari Asgard pemegang palu Mjolnir.', 'Kekuatan: Dewa Petir & Kekuatan Kosmik', 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150')">
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150" alt="Thor" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
+            <div>
+              <h3 class="font-bold text-blue-300 text-sm">Thor</h3>
+              <p class="text-[11px] text-slate-400">Dewa Petir Asgard</p>
+            </div>
           </div>
+          <button onclick="event.stopPropagation(); addFavorite('Thor')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
         </div>
-
       </div>
     </div>
 
-    <!-- 3. Konten Favorit -->
-    <div id="content-favorit" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-center">
-      <h2 class="text-xl font-bold mb-3 text-blue-400">Karakter Favorit</h2>
-      <p class="text-slate-300 text-sm mb-4">Belum ada karakter yang ditambahkan ke daftar favorit Anda.</p>
-      <div class="text-3xl animate-bounce">⭐</div>
+    <!-- 3. Favorit (Daftar Dinamis) -->
+    <div id="content-favorit" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left">
+      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Karakter Favorit Anda</h2>
+      <div id="favoriteList" class="space-y-2">
+        <p class="text-slate-400 text-xs text-center py-4">Belum ada karakter favorit. Tambahkan dari menu Karakter!</p>
+      </div>
     </div>
 
-    <!-- 4. Konten Tentang (Identitas Pengembang) -->
+    <!-- 4. Tentang -->
     <div id="content-tentang" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Tentang Pengembang</h2>
       <div class="space-y-2 text-sm text-slate-300 mb-4 bg-slate-900 p-4 rounded-xl border border-slate-700">
         <p><strong class="text-blue-300">Nama:</strong> Rizky Aditya Marvel</p>
-        <p><strong class="text-blue-300">Kompetensi Keahlian:</strong> Teknik Jaringan dan Telekomunikasi</p>
+        <p><strong class="text-blue-300">Keahlian:</strong> Teknik Jaringan dan Telekomunikasi</p>
         <p><strong class="text-blue-300">Email:</strong> rizkymarvell28@gmail.com</p>
       </div>
-      <p class="text-slate-300 text-xs text-center leading-relaxed">
-        Website modern berbasis mobile ini dikembangkan menggunakan HTML, Tailwind CSS, dan JavaScript murni untuk memberikan pengalaman interaktif terbaik di perangkat seluler.
-      </p>
+      <p class="text-slate-300 text-xs text-center">Website modern berbasis mobile dengan fitur interaktif lengkap.</p>
     </div>
 
   </main>
@@ -116,37 +122,102 @@
     &copy; 2026 Marvel Project
   </footer>
 
-  <!-- Elemen Animasi Popup (Modal) -->
+  <!-- Modal Pop-up Selamat Datang -->
   <div id="welcomeModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300 z-50 p-4">
     <div id="modalContent" class="bg-slate-900 border border-slate-700 text-white p-6 rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300 max-w-sm w-full text-center">
       <div class="text-4xl mb-3 animate-bounce">✨</div>
-      <h3 class="text-xl font-bold text-blue-400 mb-2">Selamat Datang!</h3>
-      <p class="text-slate-300 text-sm mb-5">Website dengan animasi dan informasi Marvel berhasil dimuat.</p>
-      <button onclick="closeWelcome()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-semibold transition-colors">
-        Tutup
-      </button>
+      <h3 class="text-xl font-bold text-blue-400 mb-2">Status Aktif!</h3>
+      <p class="text-slate-300 text-sm mb-5">Sistem pencarian dan favorit berjalan sempurna.</p>
+      <button onclick="closeModal('welcomeModal', 'modalContent')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-semibold">Tutup</button>
     </div>
   </div>
 
-  <!-- Skrip JavaScript untuk Tab & Animasi -->
-  <script>
-    function switchTab(tabName) {
-      const contents = document.querySelectorAll('.tab-content');
-      contents.forEach(el => el.classList.add('hidden'));
+  <!-- Modal Pop-up Detail Karakter -->
+  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300 z-50 p-4">
+    <div id="detailContent" class="bg-slate-900 border border-slate-700 text-white p-6 rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300 max-w-sm w-full text-center">
+      <img id="detailImg" src="" alt="" class="w-20 h-20 rounded-xl object-cover mx-auto mb-3 border border-slate-700 shadow-lg">
+      <h3 id="detailTitle" class="text-lg font-bold text-blue-400 mb-1"></h3>
+      <p id="detailDesc" class="text-xs text-slate-300 mb-2"></p>
+      <p id="detailPower" class="text-xs text-blue-300 font-semibold mb-5 bg-slate-800 py-1.5 px-3 rounded-lg"></p>
+      <button onclick="closeModal('detailModal', 'detailContent')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-semibold">Kembali</button>
+    </div>
+  </div>
 
-      const buttons = document.querySelectorAll('nav button');
-      buttons.forEach(btn => {
+  <!-- JavaScript Logika Fitur -->
+  <script>
+    let favorites = [];
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('nav button').forEach(btn => {
         btn.classList.remove('text-blue-400', 'font-bold');
         btn.classList.add('text-slate-300');
       });
-
       document.getElementById('content-' + tabName).classList.remove('hidden');
-
       const activeBtn = document.getElementById('btn-' + tabName);
       activeBtn.classList.remove('text-slate-300');
       activeBtn.classList.add('text-blue-400', 'font-bold');
     }
 
+    // Fitur Pencarian Karakter
+    function filterCharacters() {
+      let query = document.getElementById('searchInput').value.toLowerCase();
+      let cards = document.querySelectorAll('.char-card');
+      cards.forEach(card => {
+        let name = card.getAttribute('data-name');
+        if (name.includes(query)) {
+          card.style.display = "flex";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    // Fitur Pop-up Detail
+    function showDetail(title, desc, power, imgUrl) {
+      document.getElementById('detailTitle').innerText = title;
+      document.getElementById('detailDesc').innerText = desc;
+      document.getElementById('detailPower').innerText = power;
+      document.getElementById('detailImg').src = imgUrl;
+
+      const modal = document.getElementById('detailModal');
+      const content = document.getElementById('detailContent');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-90');
+        content.classList.add('scale-100');
+      }, 10);
+    }
+
+    // Fitur Tambah ke Favorit
+    function addFavorite(charName) {
+      if (!favorites.includes(charName)) {
+        favorites.push(charName);
+        updateFavoritesUI();
+        alert(charName + " berhasil ditambahkan ke Favorit! ⭐");
+      } else {
+        alert(charName + " sudah ada di daftar Favorit.");
+      }
+    }
+
+    function updateFavoritesUI() {
+      let listContainer = document.getElementById('favoriteList');
+      if (favorites.length === 0) {
+        listContainer.innerHTML = `<p class="text-slate-400 text-xs text-center py-4">Belum ada karakter favorit.</p>`;
+        return;
+      }
+      listContainer.innerHTML = "";
+      favorites.forEach(fav => {
+        listContainer.innerHTML += `
+          <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex justify-between items-center text-xs">
+            <span class="font-bold text-blue-300">⭐ ${fav}</span>
+            <span class="text-slate-400">Tersimpan</span>
+          </div>`;
+      });
+    }
+
+    // Modal Kontrol Umum
     function showWelcome() {
       const modal = document.getElementById('welcomeModal');
       const content = document.getElementById('modalContent');
@@ -158,9 +229,9 @@
       }, 10);
     }
 
-    function closeWelcome() {
-      const modal = document.getElementById('welcomeModal');
-      const content = document.getElementById('modalContent');
+    function closeModal(modalId, contentId) {
+      const modal = document.getElementById(modalId);
+      const content = document.getElementById(contentId);
       modal.classList.add('opacity-0');
       content.classList.remove('scale-100');
       content.classList.add('scale-90');
@@ -170,4 +241,5 @@
     }
   </script>
 </body>
-</html>
+              </html>
+              
