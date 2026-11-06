@@ -26,40 +26,66 @@
   <!-- Konten Utama -->
   <main class="p-6 max-w-md mx-auto w-full flex-grow flex flex-col items-center justify-center">
     
-    <!-- 1. Konten Beranda -->
-    <div id="content-beranda" class="tab-content bg-slate-800 p-6 rounded-2xl shadow-xl text-center w-full border border-slate-700">
-      <h2 class="text-xl font-bold mb-3">Fitur Interaktif</h2>
-      <p class="text-slate-300 text-sm mb-6">Klik tombol di bawah untuk menampilkan animasi pop-up!</p>
-      <button onclick="showWelcome()" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all duration-200">
-        Ubah Status
-      </button>
+    <!-- 1. Konten Beranda (Pengertian & Penjelasan Mendalam Marvel) -->
+    <div id="content-beranda" class="tab-content bg-slate-800 p-6 rounded-2xl shadow-xl text-left w-full border border-slate-700">
+      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Selamat Datang di Dunia Marvel</h2>
+      
+      <!-- Kotak Pengertian Marvel Lebih Detail -->
+      <div class="space-y-3 mb-5">
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+          <h3 class="font-bold text-blue-300 mb-1 text-sm">🌌 Apa itu Marvel?</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Marvel adalah waralaba media dan alam semesta fiktif Amerika yang berpusat pada kisah pahlawan super ciptaan Marvel Comics. Mulai dari komik legendaris hingga fenomena global <strong>Marvel Cinematic Universe (MCU)</strong>, Marvel telah menjadi ikon hiburan modern terbesar di dunia.
+          </p>
+        </div>
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+          <h3 class="font-bold text-blue-300 mb-1 text-sm">⚡ Karakter & Cerita</h3>
+          <p class="text-xs text-slate-300 leading-relaxed">
+            Menampilkan berbagai figur ikonik seperti Iron Man sang miliarder jenius, Spider-Man pahlawan ramah lingkungan, hingga Thor dewa petir dari Asgard, yang berjuang bersama melawan kejahatan kosmik.
+          </p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <p class="text-slate-300 text-xs mb-3">Klik tombol di bawah untuk mencoba fitur interaktif!</p>
+        <button onclick="showWelcome()" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all duration-200 text-sm">
+          Ubah Status
+        </button>
+      </div>
     </div>
 
-    <!-- 2. Konten Karakter -->
+    <!-- 2. Konten Karakter (Dengan Animasi Gerak pada Foto) -->
     <div id="content-karakter" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left">
       <h2 class="text-xl font-bold mb-4 text-center text-blue-400">Daftar Karakter</h2>
       <div class="space-y-3">
+        
+        <!-- Karakter 1 -->
         <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center gap-3">
-          <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150" alt="Iron Man" class="w-14 h-14 rounded-lg object-cover border border-slate-700">
+          <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150" alt="Iron Man" class="w-14 h-14 rounded-lg object-cover border border-slate-700 shrink-0 transition-transform duration-300 transform hover:scale-110 hover:rotate-2 shadow-lg">
           <div>
-            <h3 class="font-bold text-blue-300">Iron Man</h3>
+            <h3 class="font-bold text-blue-300 text-sm">Iron Man</h3>
             <p class="text-xs text-slate-400">Milyarder jenius dengan baju zirah berteknologi tinggi.</p>
           </div>
         </div>
+
+        <!-- Karakter 2 -->
         <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center gap-3">
-          <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150" alt="Spider-Man" class="w-14 h-14 rounded-lg object-cover border border-slate-700">
+          <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150" alt="Spider-Man" class="w-14 h-14 rounded-lg object-cover border border-slate-700 shrink-0 transition-transform duration-300 transform hover:scale-110 hover:rotate-2 shadow-lg">
           <div>
-            <h3 class="font-bold text-blue-300">Spider-Man</h3>
+            <h3 class="font-bold text-blue-300 text-sm">Spider-Man</h3>
             <p class="text-xs text-slate-400">Pahlawan super ramah dari lingkungan sekitar.</p>
           </div>
         </div>
+
+        <!-- Karakter 3 -->
         <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex items-center gap-3">
-          <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150" alt="Thor" class="w-14 h-14 rounded-lg object-cover border border-slate-700">
+          <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150" alt="Thor" class="w-14 h-14 rounded-lg object-cover border border-slate-700 shrink-0 transition-transform duration-300 transform hover:scale-110 hover:rotate-2 shadow-lg">
           <div>
-            <h3 class="font-bold text-blue-300">Thor</h3>
+            <h3 class="font-bold text-blue-300 text-sm">Thor</h3>
             <p class="text-xs text-slate-400">Dewa petir dari Asgard dengan palu sakti.</p>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -67,7 +93,7 @@
     <div id="content-favorit" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-center">
       <h2 class="text-xl font-bold mb-3 text-blue-400">Karakter Favorit</h2>
       <p class="text-slate-300 text-sm mb-4">Belum ada karakter yang ditambahkan ke daftar favorit Anda.</p>
-      <div class="text-3xl">⭐</div>
+      <div class="text-3xl animate-bounce">⭐</div>
     </div>
 
     <!-- 4. Konten Tentang (Identitas Pengembang) -->
@@ -93,9 +119,9 @@
   <!-- Elemen Animasi Popup (Modal) -->
   <div id="welcomeModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300 z-50 p-4">
     <div id="modalContent" class="bg-slate-900 border border-slate-700 text-white p-6 rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300 max-w-sm w-full text-center">
-      <div class="text-4xl mb-3">✨</div>
+      <div class="text-4xl mb-3 animate-bounce">✨</div>
       <h3 class="text-xl font-bold text-blue-400 mb-2">Selamat Datang!</h3>
-      <p class="text-slate-300 text-sm mb-5">Website profil dan galeri berhasil dimuat.</p>
+      <p class="text-slate-300 text-sm mb-5">Website dengan animasi dan informasi Marvel berhasil dimuat.</p>
       <button onclick="closeWelcome()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-semibold transition-colors">
         Tutup
       </button>
@@ -144,5 +170,4 @@
     }
   </script>
 </body>
-  </html>
-  
+</html>
