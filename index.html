@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Pro - Multiverse Edition</title>
+  <title>Marvel Pro - Arc Reactor Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Memastikan kelas hidden berfungsi sempurna */
     .hidden { display: none !important; }
 
-    /* Animasi Kedip Lampu Darurat S.H.I.E.L.D. */
+    /* Animasi Kedip Lampu Darurat S.H.I.E.L.D. & Overload */
     @keyframes emergencyAlert {
       0% { background-color: #0f172a; box-shadow: inset 0 0 0 0 rgba(239, 68, 68, 0); }
       50% { background-color: #450a0a; box-shadow: inset 0 0 50px 20px rgba(239, 68, 68, 0.6); }
@@ -51,7 +51,7 @@
   <!-- Header & Menu Navigasi -->
   <header class="p-5 bg-slate-800 shadow-lg text-center transition-colors duration-500">
     <h1 id="mainTitle" class="text-xl font-bold text-blue-400">MAESTRO MARVEL</h1>
-    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Multiverse Portal</p>
+    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Stark Control Room</p>
     
     <nav class="flex justify-center gap-4 text-xs font-medium border-t border-slate-700 pt-3">
       <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors">Beranda</button>
@@ -67,14 +67,43 @@
     <!-- 1. Beranda -->
     <div id="content-beranda" class="tab-content bg-slate-800 p-6 rounded-2xl shadow-xl text-left w-full border border-slate-700 transition-all duration-500">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Selamat Datang di Dunia Marvel</h2>
-      <div class="space-y-3 mb-5">
+      
+      <div class="space-y-3 mb-4">
         <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
-          <h3 class="font-bold text-blue-300 mb-1 text-sm">🌌 Fitur S.H.I.E.L.D. & Multiverse</h3>
+          <h3 class="font-bold text-blue-300 mb-1 text-sm">🌌 Sistem Kendali & Lab Stark</h3>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Jelajahi karakter, aktifkan sinyal darurat, atau buka Portal Multiverse untuk berpindah ke dimensi kosmik alternatif!
+            Jelajahi karakter, aktifkan sinyal darurat, buka Portal Multiverse, atau uji stabilitas reaktor Arc di bawah!
           </p>
         </div>
+
+        <!-- FITUR BARU: Simulator Stabilisasi Reaktor Arc -->
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+          <h3 class="font-bold text-cyan-400 mb-1 text-sm">⚛️ Simulator Reaktor Arc</h3>
+          <p class="text-xs text-slate-300 mb-3">Jaga stabilitas inti reaktor agar tidak terjadi ledakan sistem Stark!</p>
+          
+          <div id="reactorGameArea" class="hidden space-y-2 mb-3">
+            <div class="flex justify-between text-xs font-semibold">
+              <span id="reactorStatusText" class="text-yellow-400">Status: SIAGA</span>
+              <span id="reactorTimerText" class="text-slate-300">Waktu: 15s</span>
+            </div>
+            <!-- Progress Bar Stabilitas -->
+            <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden border border-slate-700">
+              <div id="reactorBar" class="bg-cyan-400 h-full transition-all duration-150" style="width: 100%;"></div>
+            </div>
+            <p id="reactorMessage" class="text-[11px] text-slate-400 text-center">Ketuk tombol di bawah secepat mungkin untuk mengisi energi!</p>
+          </div>
+
+          <div class="flex gap-2">
+            <button id="btnStartReactor" onclick="startReactorGame()" class="flex-1 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-xs">
+              Mulai Uji Reaktor
+            </button>
+            <button id="btnTapReactor" onclick="tapReactor()" class="hidden flex-1 py-2.5 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-xs animate-pulse">
+              ⚡ STABILKAN!
+            </button>
+          </div>
+        </div>
       </div>
+
       <div class="space-y-2.5">
         <button onclick="showWelcome()" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all text-sm">
           Ubah Status Sistem
@@ -83,7 +112,7 @@
         <button id="btnEmergency" onclick="toggleEmergencySignal()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2">
           <span>🚨</span> <span id="emergencyText">Kirim Sinyal Darurat</span>
         </button>
-        <!-- Tombol Baru: Portal Multiverse Dr. Strange -->
+        <!-- Tombol Portal Multiverse Dr. Strange -->
         <button id="btnMultiverse" onclick="toggleMultiversePortal()" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2">
           <span>🌀</span> <span id="multiverseText">Buka Portal Multiverse</span>
         </button>
@@ -185,13 +214,19 @@
     </div>
   </div>
 
-  <!-- JavaScript Logika & Fitur Multiverse Portal -->
+  <!-- JavaScript Logika Lengkap -->
   <script>
     let favorites = [];
     let isEmergencyActive = false;
     let isMultiverseActive = false;
     let audioCtx = null;
     let alarmTimer = null;
+
+    // Variabel Mini-Game Reaktor Arc
+    let reactorActive = false;
+    let reactorStability = 100;
+    let reactorTimeLeft = 15;
+    let reactorInterval = null;
 
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -262,39 +297,20 @@
       });
     }
 
-    // Efek Suara Alarm S.H.I.E.L.D.
-    function playAlarmBeep() {
+    // Web Audio API Sound Generator
+    function playTone(freq, type = 'sine', duration = 0.2) {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(700, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(350, audioCtx.currentTime + 0.25);
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
         gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.25);
-      } catch (e) {}
-    }
-
-    // Efek Suara Portal Magis Dr. Strange
-    function playPortalSound() {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      try {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(750, audioCtx.currentTime + 0.6);
-        gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.6);
+        osc.stop(audioCtx.currentTime + duration);
       } catch (e) {}
     }
 
@@ -307,9 +323,9 @@
       if (isEmergencyActive) {
         body.classList.add('emergency-active');
         text.innerText = "Matikan Sinyal Darurat";
-        playAlarmBeep();
+        playTone(700, 'sawtooth', 0.25);
         alarmTimer = setInterval(() => {
-          if (isEmergencyActive) playAlarmBeep();
+          if (isEmergencyActive) playTone(700, 'sawtooth', 0.25);
         }, 450);
         alert("🚨 PERINGATAN: Sinyal darurat S.H.I.E.L.D. aktif!");
       } else {
@@ -327,7 +343,7 @@
       const title = document.getElementById('mainTitle');
       
       isMultiverseActive = !isMultiverseActive;
-      playPortalSound();
+      playTone(600, 'sine', 0.6);
 
       if (isMultiverseActive) {
         body.classList.add('multiverse-realm');
@@ -340,6 +356,93 @@
         title.innerText = "MAESTRO MARVEL";
         alert("✨ Stabilisasi berhasil. Anda kembali ke Dimensi Utama (Earth-616).");
       }
+    }
+
+    // Mini-Game Reaktor Arc Logika
+    function startReactorGame() {
+      if (reactorActive) return;
+      reactorActive = true;
+      reactorStability = 60;
+      reactorTimeLeft = 15;
+      
+      document.getElementById('reactorGameArea').classList.remove('hidden');
+      document.getElementById('btnStartReactor').classList.add('hidden');
+      document.getElementById('btnTapReactor').classList.remove('hidden');
+      
+      updateReactorUI();
+      playTone(400, 'triangle', 0.2);
+
+      reactorInterval = setInterval(() => {
+        reactorTimeLeft--;
+        reactorStability -= 7; // Penurunan stabilitas berkala
+        
+        if (reactorStability <= 0) {
+          reactorStability = 0;
+          endReactorGame(false);
+        } else if (reactorTimeLeft <= 0) {
+          endReactorGame(true);
+        } else {
+          updateReactorUI();
+        }
+      }, 1000);
+    }
+
+    function tapReactor() {
+      if (!reactorActive) return;
+      reactorStability += 12; // Tambah kestabilan saat diketuk
+      if (reactorStability > 100) reactorStability = 100;
+      playTone(900, 'triangle', 0.1);
+      updateReactorUI();
+    }
+
+    function updateReactorUI() {
+      const bar = document.getElementById('reactorBar');
+      bar.style.width = reactorStability + '%';
+      document.getElementById('reactorTimerText').innerText = `Waktu: ${reactorTimeLeft}s`;
+      
+      const statusText = document.getElementById('reactorStatusText');
+      if (reactorStability > 60) {
+        bar.className = "bg-green-400 h-full transition-all duration-150";
+        statusText.innerText = "Status: AMAN";
+        statusText.className = "text-green-400 font-semibold";
+      } else if (reactorStability > 25) {
+        bar.className = "bg-yellow-400 h-full transition-all duration-150";
+        statusText.innerText = "Status: PERINGATAN";
+        statusText.className = "text-yellow-400 font-semibold";
+      } else {
+        bar.className = "bg-red-500 h-full transition-all duration-150 animate-pulse";
+        statusText.innerText = "Status: KRITIS!";
+        statusText.className = "text-red-500 font-bold";
+      }
+    }
+
+    function endReactorGame(success) {
+      reactorActive = false;
+      clearInterval(reactorInterval);
+      
+      document.getElementById('btnStartReactor').classList.remove('hidden');
+      document.getElementById('btnTapReactor').classList.add('hidden');
+      
+      if (success) {
+        playTone(1200, 'sine', 0.4);
+        alert("🎉 LUAR BIASA! Reaktor Arc berhasil distabilkan, sistem Stark aman!");
+        document.getElementById('reactorStatusText').innerText = "Status: BERHASIL";
+        document.getElementById('reactorStatusText').className = "text-green-400 font-bold";
+      } else {
+        playTone(150, 'sawtooth', 0.5);
+        alert("💥 LEDAKAN REAKTOR! Inti mengalami overload total. Coba lagi!");
+        document.getElementById('reactorStatusText').innerText = "Status: OVERLOAD";
+        document.getElementById('reactorStatusText').className = "text-red-500 font-bold";
+        triggerExplosionEffect();
+      }
+    }
+
+    function triggerExplosionEffect() {
+      const body = document.getElementById('mainBody');
+      body.classList.add('emergency-active');
+      setTimeout(() => {
+        body.classList.remove('emergency-active');
+      }, 1500);
     }
 
     // Modal Kontrol
