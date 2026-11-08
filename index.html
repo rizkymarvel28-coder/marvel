@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Pro - Ultimate Lore Edition</title>
+  <title>Marvel Pro - Universe Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Memastikan kelas hidden berfungsi sempurna */
@@ -88,8 +88,8 @@
 
   <!-- Header & Menu Navigasi -->
   <header class="p-5 bg-slate-800 shadow-lg text-center transition-colors duration-500">
-    <h1 id="mainTitle" class="text-xl font-bold text-blue-400">MAESTRO MARVEL</h1>
-    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Lore Encyclopedia</p>
+    <h1 id="mainTitle" class="text-xl font-bold text-blue-400">MARVEL UNIVERSE</h1>
+    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Lore Database</p>
     
     <nav class="flex justify-center gap-4 text-xs font-medium border-t border-slate-700 pt-3">
       <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors">Beranda</button>
@@ -104,27 +104,27 @@
     
     <!-- 1. Beranda -->
     <div id="content-beranda" class="tab-content bg-slate-800 p-6 rounded-2xl shadow-xl text-left w-full border border-slate-700 transition-all duration-500">
-      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Selamat Datang di Dunia Marvel</h2>
+      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Pusat Informasi Marvel</h2>
       
       <div class="space-y-3 mb-4">
         <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
-          <h3 class="font-bold text-blue-300 mb-1 text-sm">🌌 Sistem Kendali & Lab Stark</h3>
+          <h3 class="font-bold text-blue-300 mb-1 text-sm">📖 Ensiklopedia & Sejarah Marvel</h3>
           <p class="text-xs text-slate-300 leading-relaxed mb-3">
-            Sentuh layar di mana saja untuk melihat efek gelombang Reaktor Arc! Akses juga arsip lore di bawah.
+            Pelajari sejarah awal mula terbentuknya Marvel, film pertama, hingga film paling berkesan di bawah ini!
           </p>
 
-          <!-- FITUR BARU: Tombol Arsip Topik / Lore Marvel -->
+          <!-- Tombol Topik Marvel Resmi -->
           <div class="border-t border-slate-700 pt-3">
-            <p class="text-[11px] font-semibold text-blue-400 mb-2">📚 ARSIP DATABASE LORE MARVEL:</p>
+            <p class="text-[11px] font-semibold text-blue-400 mb-2">✨ PILIH TOPIK ARSIP MARVEL:</p>
             <div class="grid grid-cols-3 gap-2">
-              <button onclick="openLore('stones')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
-                💎 Batu Abadi
+              <button onclick="openLore('formation')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
+                🏛️ Sejarah
               </button>
-              <button onclick="openLore('armor')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
-                🛡️ Zirah Stark
+              <button onclick="openLore('firstmovie')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
+                🎬 Film Pertama
               </button>
-              <button onclick="openLore('shield')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
-                🦅 S.H.I.E.L.D.
+              <button onclick="openLore('iconicmovie')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
+                🌟 Film Berkesan
               </button>
             </div>
           </div>
@@ -173,50 +173,86 @@
       </div>
     </div>
 
-    <!-- 2. Karakter -->
+    <!-- 2. Karakter (Anggota Terlengkap Marvel) -->
     <div id="content-karakter" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
-      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Daftar Karakter</h2>
+      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Daftar Anggota Marvel</h2>
       
       <!-- Kolom Pencarian -->
       <div class="mb-4">
         <input type="text" id="searchInput" onkeyup="filterCharacters()" placeholder="Cari pahlawan (cth: Iron Man)..." class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
       </div>
 
-      <div id="characterList" class="space-y-3">
+      <div id="characterList" class="space-y-3 max-h-[350px] overflow-y-auto pr-1">
         <!-- Karakter 1 -->
-        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="iron man" onclick="showDetail('Iron Man', 'Miliarder jenius pencipta teknologi zirah canggih.', 'Kekuatan: Teknologi & Kecerdasan Jenius', 'https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150')">
+        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="iron man" onclick="showDetail('Iron Man', 'Miliarder jenius pencipta teknologi zirah canggih.', 'Kekuatan: Teknologi Armor & Kecerdasan Jenius', 'https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150')">
           <div class="flex items-center gap-3">
             <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150" alt="Iron Man" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
             <div>
               <h3 class="font-bold text-blue-300 text-sm">Iron Man</h3>
-              <p class="text-[11px] text-slate-400">Teknologi & Armor Besi</p>
+              <p class="text-[11px] text-slate-400">Tony Stark</p>
             </div>
           </div>
           <button onclick="event.stopPropagation(); addFavorite('Iron Man')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
         </div>
 
         <!-- Karakter 2 -->
-        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="spider-man" onclick="showDetail('Spider-Man', 'Pahlawan ramah lingkungan dengan kemampuan laba-laba.', 'Kekuatan: Kelincahan & Laba-laba', 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150')">
+        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="captain america" onclick="showDetail('Captain America', 'Prajurit super pertama pelindung kebebasan pemegang perisai vibranium.', 'Kekuatan: Super Soldier & Ahli Strategi', 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150')">
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150" alt="Captain America" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
+            <div>
+              <h3 class="font-bold text-blue-300 text-sm">Captain America</h3>
+              <p class="text-[11px] text-slate-400">Steve Rogers</p>
+            </div>
+          </div>
+          <button onclick="event.stopPropagation(); addFavorite('Captain America')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
+        </div>
+
+        <!-- Karakter 3 -->
+        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="thor" onclick="showDetail('Thor', 'Dewa petir dari Asgard pemegang palu Mjolnir dan kapak Stormbreaker.', 'Kekuatan: Dewa Petir & Kekuatan Kosmik', 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150')">
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150" alt="Thor" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
+            <div>
+              <h3 class="font-bold text-blue-300 text-sm">Thor Odinson</h3>
+              <p class="text-[11px] text-slate-400">Dewa Petir Asgard</p>
+            </div>
+          </div>
+          <button onclick="event.stopPropagation(); addFavorite('Thor')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
+        </div>
+
+        <!-- Karakter 4 -->
+        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="spider-man" onclick="showDetail('Spider-Man', 'Pahlawan remaja ramah lingkungan dengan kemampuan laba-laba.', 'Kekuatan: Laba-laba & Kelincahan Tinggi', 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150')">
           <div class="flex items-center gap-3">
             <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150" alt="Spider-Man" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
             <div>
               <h3 class="font-bold text-blue-300 text-sm">Spider-Man</h3>
-              <p class="text-[11px] text-slate-400">Manusia Laba-laba</p>
+              <p class="text-[11px] text-slate-400">Peter Parker</p>
             </div>
           </div>
           <button onclick="event.stopPropagation(); addFavorite('Spider-Man')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
         </div>
 
-        <!-- Karakter 3 -->
-        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="thor" onclick="showDetail('Thor', 'Dewa petir dari Asgard pemegang palu Mjolnir.', 'Kekuatan: Dewa Petir & Kekuatan Kosmik', 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150')">
+        <!-- Karakter 5 -->
+        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="doctor strange" onclick="showDetail('Doctor Strange', 'Ahli bedah saraf yang menjadi Master of the Mystic Arts.', 'Kekuatan: Sihir Dimensi & Time Stone', 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=150')">
           <div class="flex items-center gap-3">
-            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150" alt="Thor" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=150" alt="Doctor Strange" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
             <div>
-              <h3 class="font-bold text-blue-300 text-sm">Thor</h3>
-              <p class="text-[11px] text-slate-400">Dewa Petir Asgard</p>
+              <h3 class="font-bold text-blue-300 text-sm">Doctor Strange</h3>
+              <p class="text-[11px] text-slate-400">Master of Mystic Arts</p>
             </div>
           </div>
-          <button onclick="event.stopPropagation(); addFavorite('Thor')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
+          <button onclick="event.stopPropagation(); addFavorite('Doctor Strange')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
+        </div>
+
+        <!-- Karakter 6 -->
+        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="hulk" onclick="showDetail('Hulk', 'Ilmuwan brankas Bruce Banner yang berubah menjadi raksasa hijau.', 'Kekuatan: Kekuatan Fisik Tanpa Batas', 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=150')">
+          <div class="flex items-center gap-3">
+            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=150" alt="Hulk" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
+            <div>
+              <h3 class="font-bold text-blue-300 text-sm">Hulk</h3>
+              <p class="text-[11px] text-slate-400">Bruce Banner</p>
+            </div>
+          </div>
+          <button onclick="event.stopPropagation(); addFavorite('Hulk')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
         </div>
       </div>
     </div>
@@ -244,7 +280,7 @@
 
   <!-- Footer -->
   <footer class="p-4 text-center text-xs text-slate-500">
-    &copy; 2026 Marvel Project
+    &copy; 2026 Marvel Universe Project
   </footer>
 
   <!-- Modal Pop-up Selamat Datang -->
@@ -268,14 +304,14 @@
     </div>
   </div>
 
-  <!-- FITUR BARU: Modal Pop-up Arsip Lore Marvel dengan Animasi Halus -->
+  <!-- Modal Pop-up Arsip Lore Marvel -->
   <div id="loreModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300 z-50 p-4">
     <div id="loreContent" class="bg-slate-900 border border-slate-700 text-white p-6 rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300 max-w-sm w-full text-left">
       <div class="flex items-center gap-3 mb-3">
-        <span id="loreIcon" class="text-3xl">💎</span>
+        <span id="loreIcon" class="text-3xl">🏛️</span>
         <div>
-          <h3 id="loreTitle" class="text-base font-bold text-blue-400">Judul Lore</h3>
-          <p class="text-[10px] text-slate-400">Arsip Resmi S.H.I.E.L.D. Database</p>
+          <h3 id="loreTitle" class="text-base font-bold text-blue-400">Judul Topik</h3>
+          <p class="text-[10px] text-slate-400">Arsip Resmi Marvel Universe</p>
         </div>
       </div>
       <div class="space-y-2 text-xs text-slate-300 mb-5 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700/80 leading-relaxed">
@@ -300,32 +336,31 @@
     let reactorTimeLeft = 15;
     let reactorInterval = null;
 
-    // Data Ensiklopedia Lore Marvel
+    // Data Ensiklopedia Topik Marvel (Sejarah, Film Pertama, Film Berkesan)
     const loreData = {
-      stones: {
-        icon: "💎",
-        title: "Batu Abadi (Infinity Stones)",
-        definition: "Enam permata kosmik mahakuasa yang masing-masing menguasai aspek fundamental alam semesta.",
-        origin: "Tercipta dari singularitas sebelum alam semesta terbentuk, kemudian dipadatkan menjadi enam batu kosmik oleh entitas kosmik.",
-        extra: "Terdiri dari Space, Reality, Power, Mind, Time, dan Soul Stone. Siapa pun yang menguasainya dapat mengendalikan realitas semesta."
+      formation: {
+        icon: "🏛️",
+        title: "Sejarah Pembentukan Marvel",
+        definition: "Penerbit buku komik legendaris dunia yang melahirkan ribuan pahlawan super ikonik.",
+        origin: "Didirikan tahun 1939 oleh Martin Goodman dengan nama awal Timely Comics, sebelum resmi berganti nama menjadi Marvel Comics pada tahun 1961 berkat Stan Lee dan Jack Kirby.",
+        extra: "Memulai era keemasan komik modern lewat penciptaan karakter epik seperti Fantastic Four, Spider-Man, Hulk, X-Men, hingga mendunia lewat Marvel Studios (MCU)."
       },
-      armor: {
-        icon: "🛡️",
-        title: "Teknologi Zirah Stark",
-        definition: "Sistem pertahanan lapis baja cerdas berbasis teknologi nano dan Reaktor Arc ciptaan Tony Stark.",
-        origin: "Bermula dari prototipe besi kasar (Mark I) yang dirakit Tony Stark di dalam gua untuk melarikan diri, lalu dikembangkan menjadi teknologi nano canggih.",
-        extra: "Dilengkapi kecerdasan buatan (J.A.R.V.I.S./F.R.I.D.A.Y.), sistem repulsor, dan kemampuan adaptasi medan perang secara instan."
+      firstmovie: {
+        icon: "🎬",
+        title: "Film Pertama MCU (Iron Man, 2008)",
+        definition: "Film pembuka dari Marvel Cinematic Universe (MCU) yang mengawali seluruh keterhubungan film pahlawan super.",
+        origin: "Dirilis pada bulan Mei 2008, disutradarai oleh Jon Favreau dan dibintangi oleh Robert Downey Jr. sebagai Tony Stark.",
+        extra: "Sukses besar secara komersial dan kritis, membuktikan bahwa adaptasi komik bisa dikemas dengan gaya realistis, cerdas, dan penuh aksi."
       },
-      shield: {
-        icon: "🦅",
-        title: "Inisiatif S.H.I.E.L.D.",
-        definition: "Badan intelijen pertahanan strategis dan penegakan hukum perdamaian dunia.",
-        origin: "Didirikan pasca Perang Dunia II oleh Peggy Carter dan Howard Stark untuk melindungi bumi dari ancaman luar biasa.",
-        extra: "Beroperasi di bawah komando Direktur (seperti Nick Fury) menggunakan markas udara canggih bernama Helicarrier."
+      iconicmovie: {
+        icon: "🌟",
+        title: "Film Paling Berkesan (Avengers: Endgame, 2019)",
+        definition: "Klimaks epik dan sangat emosional dari Infinity Saga penutup pertempuran melawan Thanos.",
+        origin: "Disutradarai oleh Anthony dan Joe Russo, menjadi salah satu pencapaian terbesar perfilman dunia dengan pendapatan box office masif.",
+        extra: "Menghadirkan momen paling legendaris dalam sejarah perfilman, termasuk pengorbanan Tony Stark ('I am Iron Man') dan penyatuan seluruh pahlawan."
       }
     };
 
-    // Fungsi Membuka Arsip Lore dengan Animasi Pop-up Halus
     function openLore(type) {
       const data = loreData[type];
       if (!data) return;
@@ -336,7 +371,7 @@
       document.getElementById('loreOrigin').innerText = data.origin;
       document.getElementById('loreExtra').innerText = data.extra;
 
-      playTone(800, 'sine', 0.15); // Efek suara klik futuristik
+      playTone(800, 'sine', 0.15);
 
       const modal = document.getElementById('loreModal');
       const content = document.getElementById('loreContent');
@@ -485,12 +520,12 @@
       if (isMultiverseActive) {
         body.classList.add('multiverse-realm');
         text.innerText = "Tutup Portal Multiverse";
-        title.innerText = "MAESTRO MULTIVERSE";
+        title.innerText = "MARVEL MULTIVERSE";
         alert("🌀 PORTAL TERBUKA: Dimensi alternatif kosmik pahlawan Marvel aktif!");
       } else {
         body.classList.remove('multiverse-realm');
         text.innerText = "Buka Portal Multiverse";
-        title.innerText = "MAESTRO MARVEL";
+        title.innerText = "MARVEL UNIVERSE";
         alert("✨ Stabilisasi berhasil. Kembali ke Dimensi Utama (Earth-616).");
       }
     }
