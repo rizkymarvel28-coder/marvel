@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Pro - Complete Edition</title>
+  <title>Marvel Pro - Emergency Audio Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Memastikan kelas hidden berfungsi sempurna di semua kondisi */
@@ -51,7 +51,7 @@
         <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
           <h3 class="font-bold text-blue-300 mb-1 text-sm">⚡ Fitur & Sistem S.H.I.E.L.D.</h3>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Jelajahi daftar karakter, simpan favorit, dan gunakan tombol darurat saat ancaman kosmik terdeteksi!
+            Jelajahi daftar karakter, simpan favorit, danaktifkan sinyal darurat bersuara saat ancaman terdeteksi!
           </p>
         </div>
       </div>
@@ -59,7 +59,7 @@
         <button onclick="showWelcome()" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all text-sm">
           Ubah Status
         </button>
-        <!-- Tombol Sinyal Darurat S.H.I.E.L.D. -->
+        <!-- Tombol Sinyal Darurat S.H.I.E.L.D. dengan Suara Alarm -->
         <button id="btnEmergency" onclick="toggleEmergencySignal()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2">
           <span>🚨</span> <span id="emergencyText">Kirim Sinyal Darurat</span>
         </button>
@@ -161,10 +161,12 @@
     </div>
   </div>
 
-  <!-- JavaScript Logika Fitur -->
+  <!-- JavaScript Logika Fitur & Audio Alarm -->
   <script>
     let favorites = [];
     let isEmergencyActive = false;
+    let audioCtx = null;
+    let alarmTimer = null;
 
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
@@ -218,7 +220,7 @@
     function updateFavoritesUI() {
       let listContainer = document.getElementById('favoriteList');
       if (favorites.length === 0) {
-        listContainer.innerHTML = `<p class="text-slate-400 text-xs text-center py-4">Belum ada karakter favorit.</p>`;
+        listContainer.innerHTML = `<p class="text-slate-400 text-xs text-center py-4">Belum ada karakter favorit. Tambahkan dari menu Karakter!</p>`;
         return;
       }
       listContainer.innerHTML = "";
@@ -231,7 +233,33 @@
       });
     }
 
-    // Sinyal Darurat S.H.I.E.L.D.
+    // Fungsi Memutar Suara Alarm Sintetis (Web Audio API)
+    function playAlarmBeep() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(700, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(350, audioCtx.currentTime + 0.25);
+        
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+        
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.25);
+      } catch (e) {
+        console.log("Audio dibatasi browser:", e);
+      }
+    }
+
+    // Sinyal Darurat S.H.I.E.L.D. + Suara Alarm
     function toggleEmergencySignal() {
       const body = document.getElementById('mainBody');
       const text = document.getElementById('emergencyText');
@@ -240,10 +268,21 @@
       if (isEmergencyActive) {
         body.classList.add('emergency-active');
         text.innerText = "Matikan Sinyal Darurat";
-        alert("🚨 PERINGATAN: Sinyal darurat S.H.I.E.L.D. aktif! Seluruh agen bersiap menghadapi ancaman.");
+        
+        // Mulai bunyi alarm berulang tiap 450ms
+        playAlarmBeep();
+        alarmTimer = setInterval(() => {
+          if (isEmergencyActive) playAlarmBeep();
+        }, 450);
+
+        alert("🚨 PERINGATAN: Sinyal darurat S.H.I.E.L.D. & Alarm Aktif!");
       } else {
         body.classList.remove('emergency-active');
         text.innerText = "Kirim Sinyal Darurat";
+        
+        // Hentikan alarm
+        clearInterval(alarmTimer);
+        
         alert("✅ Situasi kembali aman. Sistem normal dipulihkan.");
       }
     }
