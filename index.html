@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Pro - Emergency Audio Edition</title>
+  <title>Marvel Pro - Multiverse Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Memastikan kelas hidden berfungsi sempurna di semua kondisi */
+    /* Memastikan kelas hidden berfungsi sempurna */
     .hidden { display: none !important; }
 
     /* Animasi Kedip Lampu Darurat S.H.I.E.L.D. */
@@ -18,14 +18,40 @@
     .emergency-active {
       animation: emergencyAlert 0.8s infinite ease-in-out;
     }
+
+    /* Efek Tema Dimensi Multiverse (Dr. Strange Realm) */
+    body.multiverse-realm {
+      background-color: #1e1b4b !important;
+    }
+    body.multiverse-realm header {
+      background-color: #311042 !important;
+      border-bottom: 2px solid #a855f7;
+    }
+    body.multiverse-realm .tab-content {
+      background-color: #2e1065 !important;
+      border-color: #a855f7 !important;
+      box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+    }
+    body.multiverse-realm h1, body.multiverse-realm h2, body.multiverse-realm .text-blue-400 {
+      color: #e879f9 !important;
+    }
+    body.multiverse-realm .text-blue-300 {
+      color: #f0abfc !important;
+    }
+    body.multiverse-realm button.bg-blue-600 {
+      background-color: #9333ea !important;
+    }
+    body.multiverse-realm button.bg-blue-600:hover {
+      background-color: #7e22ce !important;
+    }
   </style>
 </head>
-<body id="mainBody" class="bg-slate-900 text-white min-h-screen flex flex-col justify-between transition-colors duration-300">
+<body id="mainBody" class="bg-slate-900 text-white min-h-screen flex flex-col justify-between transition-colors duration-500">
 
   <!-- Header & Menu Navigasi -->
-  <header class="p-5 bg-slate-800 shadow-lg text-center">
-    <h1 class="text-xl font-bold text-blue-400">MAESTRO MARVEL</h1>
-    <p class="text-xs text-slate-400 mb-3">Website Modern Berbasis Mobile</p>
+  <header class="p-5 bg-slate-800 shadow-lg text-center transition-colors duration-500">
+    <h1 id="mainTitle" class="text-xl font-bold text-blue-400">MAESTRO MARVEL</h1>
+    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Multiverse Portal</p>
     
     <nav class="flex justify-center gap-4 text-xs font-medium border-t border-slate-700 pt-3">
       <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors">Beranda</button>
@@ -39,35 +65,33 @@
   <main class="p-5 max-w-md mx-auto w-full flex-grow flex flex-col items-center justify-center">
     
     <!-- 1. Beranda -->
-    <div id="content-beranda" class="tab-content bg-slate-800 p-6 rounded-2xl shadow-xl text-left w-full border border-slate-700">
+    <div id="content-beranda" class="tab-content bg-slate-800 p-6 rounded-2xl shadow-xl text-left w-full border border-slate-700 transition-all duration-500">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Selamat Datang di Dunia Marvel</h2>
       <div class="space-y-3 mb-5">
         <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
-          <h3 class="font-bold text-blue-300 mb-1 text-sm">🌌 Apa itu Marvel?</h3>
+          <h3 class="font-bold text-blue-300 mb-1 text-sm">🌌 Fitur S.H.I.E.L.D. & Multiverse</h3>
           <p class="text-xs text-slate-300 leading-relaxed">
-            Marvel adalah waralaba media dan alam semesta fiktif yang berpusat pada kisah pahlawan super ciptaan Marvel Comics serta fenomena global <strong>Marvel Cinematic Universe (MCU)</strong>.
-          </p>
-        </div>
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
-          <h3 class="font-bold text-blue-300 mb-1 text-sm">⚡ Fitur & Sistem S.H.I.E.L.D.</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Jelajahi daftar karakter, simpan favorit, danaktifkan sinyal darurat bersuara saat ancaman terdeteksi!
+            Jelajahi karakter, aktifkan sinyal darurat, atau buka Portal Multiverse untuk berpindah ke dimensi kosmik alternatif!
           </p>
         </div>
       </div>
-      <div class="space-y-2">
+      <div class="space-y-2.5">
         <button onclick="showWelcome()" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all text-sm">
-          Ubah Status
+          Ubah Status Sistem
         </button>
-        <!-- Tombol Sinyal Darurat S.H.I.E.L.D. dengan Suara Alarm -->
+        <!-- Tombol Sinyal Darurat S.H.I.E.L.D. -->
         <button id="btnEmergency" onclick="toggleEmergencySignal()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2">
           <span>🚨</span> <span id="emergencyText">Kirim Sinyal Darurat</span>
+        </button>
+        <!-- Tombol Baru: Portal Multiverse Dr. Strange -->
+        <button id="btnMultiverse" onclick="toggleMultiversePortal()" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2">
+          <span>🌀</span> <span id="multiverseText">Buka Portal Multiverse</span>
         </button>
       </div>
     </div>
 
     <!-- 2. Karakter -->
-    <div id="content-karakter" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left">
+    <div id="content-karakter" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Daftar Karakter</h2>
       
       <!-- Kolom Pencarian -->
@@ -115,7 +139,7 @@
     </div>
 
     <!-- 3. Favorit -->
-    <div id="content-favorit" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left">
+    <div id="content-favorit" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Karakter Favorit Anda</h2>
       <div id="favoriteList" class="space-y-2">
         <p class="text-slate-400 text-xs text-center py-4">Belum ada karakter favorit. Tambahkan dari menu Karakter!</p>
@@ -123,7 +147,7 @@
     </div>
 
     <!-- 4. Tentang -->
-    <div id="content-tentang" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left">
+    <div id="content-tentang" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Tentang Pengembang</h2>
       <div class="space-y-2 text-sm text-slate-300 mb-4 bg-slate-900 p-4 rounded-xl border border-slate-700">
         <p><strong class="text-blue-300">Nama:</strong> Rizky Aditya Marvel</p>
@@ -161,23 +185,28 @@
     </div>
   </div>
 
-  <!-- JavaScript Logika Fitur & Audio Alarm -->
+  <!-- JavaScript Logika & Fitur Multiverse Portal -->
   <script>
     let favorites = [];
     let isEmergencyActive = false;
+    let isMultiverseActive = false;
     let audioCtx = null;
     let alarmTimer = null;
 
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('nav button').forEach(btn => {
-        btn.classList.remove('text-blue-400', 'font-bold');
+        btn.classList.remove('text-blue-400', 'font-bold', 'text-purple-400');
         btn.classList.add('text-slate-300');
       });
       document.getElementById('content-' + tabName).classList.remove('hidden');
       const activeBtn = document.getElementById('btn-' + tabName);
       activeBtn.classList.remove('text-slate-300');
-      activeBtn.classList.add('text-blue-400', 'font-bold');
+      if (isMultiverseActive) {
+        activeBtn.classList.add('text-purple-400', 'font-bold');
+      } else {
+        activeBtn.classList.add('text-blue-400', 'font-bold');
+      }
     }
 
     // Filter Karakter
@@ -233,33 +262,43 @@
       });
     }
 
-    // Fungsi Memutar Suara Alarm Sintetis (Web Audio API)
+    // Efek Suara Alarm S.H.I.E.L.D.
     function playAlarmBeep() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       try {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(700, audioCtx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(350, audioCtx.currentTime + 0.25);
-        
         gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
-        
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        
         osc.start();
         osc.stop(audioCtx.currentTime + 0.25);
-      } catch (e) {
-        console.log("Audio dibatasi browser:", e);
-      }
+      } catch (e) {}
     }
 
-    // Sinyal Darurat S.H.I.E.L.D. + Suara Alarm
+    // Efek Suara Portal Magis Dr. Strange
+    function playPortalSound() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(750, audioCtx.currentTime + 0.6);
+        gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.6);
+      } catch (e) {}
+    }
+
+    // Sinyal Darurat S.H.I.E.L.D.
     function toggleEmergencySignal() {
       const body = document.getElementById('mainBody');
       const text = document.getElementById('emergencyText');
@@ -268,22 +307,38 @@
       if (isEmergencyActive) {
         body.classList.add('emergency-active');
         text.innerText = "Matikan Sinyal Darurat";
-        
-        // Mulai bunyi alarm berulang tiap 450ms
         playAlarmBeep();
         alarmTimer = setInterval(() => {
           if (isEmergencyActive) playAlarmBeep();
         }, 450);
-
-        alert("🚨 PERINGATAN: Sinyal darurat S.H.I.E.L.D. & Alarm Aktif!");
+        alert("🚨 PERINGATAN: Sinyal darurat S.H.I.E.L.D. aktif!");
       } else {
         body.classList.remove('emergency-active');
         text.innerText = "Kirim Sinyal Darurat";
-        
-        // Hentikan alarm
         clearInterval(alarmTimer);
-        
-        alert("✅ Situasi kembali aman. Sistem normal dipulihkan.");
+        alert("✅ Situasi kembali aman.");
+      }
+    }
+
+    // Toggle Portal Multiverse Dr. Strange
+    function toggleMultiversePortal() {
+      const body = document.getElementById('mainBody');
+      const text = document.getElementById('multiverseText');
+      const title = document.getElementById('mainTitle');
+      
+      isMultiverseActive = !isMultiverseActive;
+      playPortalSound();
+
+      if (isMultiverseActive) {
+        body.classList.add('multiverse-realm');
+        text.innerText = "Tutup Portal Multiverse";
+        title.innerText = "MAESTRO MULTIVERSE";
+        alert("🌀 PORTAL TERBUKA: Anda telah melintasi dimensi alternatif kosmik Dr. Strange!");
+      } else {
+        body.classList.remove('multiverse-realm');
+        text.innerText = "Buka Portal Multiverse";
+        title.innerText = "MAESTRO MARVEL";
+        alert("✨ Stabilisasi berhasil. Anda kembali ke Dimensi Utama (Earth-616).");
       }
     }
 
