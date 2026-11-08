@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Pro - Ultimate Stark Edition</title>
+  <title>Marvel Pro - Ultimate Lore Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Memastikan kelas hidden berfungsi sempurna */
@@ -31,16 +31,10 @@
       animation: blastFlash 1.2s ease-in-out;
     }
 
-    /* FITUR BARU: Animasi Gelombang Sentuhan Reaktor (Stark Touch Ripple) */
+    /* Efek Gelombang Sentuhan Reaktor (Stark Touch Ripple) */
     @keyframes rippleEffect {
-      0% {
-        transform: scale(0);
-        opacity: 0.9;
-      }
-      100% {
-        transform: scale(4.5);
-        opacity: 0;
-      }
+      0% { transform: scale(0); opacity: 0.9; }
+      100% { transform: scale(4.5); opacity: 0; }
     }
     .stark-ripple {
       position: fixed;
@@ -57,7 +51,7 @@
       box-shadow: 0 0 15px rgba(6, 182, 212, 0.8);
     }
 
-    /* Efek Tema Dimensi Multiverse (Latar Belakang Pahlawan & Kosmik Marvel) */
+    /* Efek Tema Dimensi Multiverse */
     body.multiverse-realm {
       background: linear-gradient(rgba(30, 27, 75, 0.88), rgba(15, 23, 42, 0.92)), 
                   url('https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=1200') !important;
@@ -95,7 +89,7 @@
   <!-- Header & Menu Navigasi -->
   <header class="p-5 bg-slate-800 shadow-lg text-center transition-colors duration-500">
     <h1 id="mainTitle" class="text-xl font-bold text-blue-400">MAESTRO MARVEL</h1>
-    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Stark Touch Ripple</p>
+    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Lore Encyclopedia</p>
     
     <nav class="flex justify-center gap-4 text-xs font-medium border-t border-slate-700 pt-3">
       <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors">Beranda</button>
@@ -115,9 +109,25 @@
       <div class="space-y-3 mb-4">
         <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
           <h3 class="font-bold text-blue-300 mb-1 text-sm">🌌 Sistem Kendali & Lab Stark</h3>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            Sentuh layar di mana saja untuk melihat efek gelombang Reaktor Arc! Jelajahi juga fitur darurat dan portal di bawah.
+          <p class="text-xs text-slate-300 leading-relaxed mb-3">
+            Sentuh layar di mana saja untuk melihat efek gelombang Reaktor Arc! Akses juga arsip lore di bawah.
           </p>
+
+          <!-- FITUR BARU: Tombol Arsip Topik / Lore Marvel -->
+          <div class="border-t border-slate-700 pt-3">
+            <p class="text-[11px] font-semibold text-blue-400 mb-2">📚 ARSIP DATABASE LORE MARVEL:</p>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="openLore('stones')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
+                💎 Batu Abadi
+              </button>
+              <button onclick="openLore('armor')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
+                🛡️ Zirah Stark
+              </button>
+              <button onclick="openLore('shield')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
+                🦅 S.H.I.E.L.D.
+              </button>
+            </div>
+          </div>
         </div>
 
         <!-- Simulator Reaktor Arc -->
@@ -258,7 +268,26 @@
     </div>
   </div>
 
-  <!-- JavaScript Logika Lengkap & Stark Touch Ripple -->
+  <!-- FITUR BARU: Modal Pop-up Arsip Lore Marvel dengan Animasi Halus -->
+  <div id="loreModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300 z-50 p-4">
+    <div id="loreContent" class="bg-slate-900 border border-slate-700 text-white p-6 rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300 max-w-sm w-full text-left">
+      <div class="flex items-center gap-3 mb-3">
+        <span id="loreIcon" class="text-3xl">💎</span>
+        <div>
+          <h3 id="loreTitle" class="text-base font-bold text-blue-400">Judul Lore</h3>
+          <p class="text-[10px] text-slate-400">Arsip Resmi S.H.I.E.L.D. Database</p>
+        </div>
+      </div>
+      <div class="space-y-2 text-xs text-slate-300 mb-5 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700/80 leading-relaxed">
+        <p><strong>Pengertian:</strong> <span id="loreDefinition">-</span></p>
+        <p><strong>Awal Mula:</strong> <span id="loreOrigin">-</span></p>
+        <p><strong>Info Penting:</strong> <span id="loreExtra">-</span></p>
+      </div>
+      <button onclick="closeModal('loreModal', 'loreContent')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-xs font-semibold">Tutup Arsip</button>
+    </div>
+  </div>
+
+  <!-- JavaScript Logika & Fitur Lengkap -->
   <script>
     let favorites = [];
     let isEmergencyActive = false;
@@ -271,7 +300,55 @@
     let reactorTimeLeft = 15;
     let reactorInterval = null;
 
-    // FITUR UTAMA: Efek Sentuhan Reaktor (Ripple Effect di Layar)
+    // Data Ensiklopedia Lore Marvel
+    const loreData = {
+      stones: {
+        icon: "💎",
+        title: "Batu Abadi (Infinity Stones)",
+        definition: "Enam permata kosmik mahakuasa yang masing-masing menguasai aspek fundamental alam semesta.",
+        origin: "Tercipta dari singularitas sebelum alam semesta terbentuk, kemudian dipadatkan menjadi enam batu kosmik oleh entitas kosmik.",
+        extra: "Terdiri dari Space, Reality, Power, Mind, Time, dan Soul Stone. Siapa pun yang menguasainya dapat mengendalikan realitas semesta."
+      },
+      armor: {
+        icon: "🛡️",
+        title: "Teknologi Zirah Stark",
+        definition: "Sistem pertahanan lapis baja cerdas berbasis teknologi nano dan Reaktor Arc ciptaan Tony Stark.",
+        origin: "Bermula dari prototipe besi kasar (Mark I) yang dirakit Tony Stark di dalam gua untuk melarikan diri, lalu dikembangkan menjadi teknologi nano canggih.",
+        extra: "Dilengkapi kecerdasan buatan (J.A.R.V.I.S./F.R.I.D.A.Y.), sistem repulsor, dan kemampuan adaptasi medan perang secara instan."
+      },
+      shield: {
+        icon: "🦅",
+        title: "Inisiatif S.H.I.E.L.D.",
+        definition: "Badan intelijen pertahanan strategis dan penegakan hukum perdamaian dunia.",
+        origin: "Didirikan pasca Perang Dunia II oleh Peggy Carter dan Howard Stark untuk melindungi bumi dari ancaman luar biasa.",
+        extra: "Beroperasi di bawah komando Direktur (seperti Nick Fury) menggunakan markas udara canggih bernama Helicarrier."
+      }
+    };
+
+    // Fungsi Membuka Arsip Lore dengan Animasi Pop-up Halus
+    function openLore(type) {
+      const data = loreData[type];
+      if (!data) return;
+
+      document.getElementById('loreIcon').innerText = data.icon;
+      document.getElementById('loreTitle').innerText = data.title;
+      document.getElementById('loreDefinition').innerText = data.definition;
+      document.getElementById('loreOrigin').innerText = data.origin;
+      document.getElementById('loreExtra').innerText = data.extra;
+
+      playTone(800, 'sine', 0.15); // Efek suara klik futuristik
+
+      const modal = document.getElementById('loreModal');
+      const content = document.getElementById('loreContent');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        content.classList.remove('scale-90');
+        content.classList.add('scale-100');
+      }, 10);
+    }
+
+    // Efek Sentuhan Reaktor (Ripple Effect)
     document.addEventListener('click', function(e) {
       createStarkRipple(e.clientX, e.clientY);
     });
