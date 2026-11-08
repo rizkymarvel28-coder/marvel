@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Pro - Arc Reactor Edition</title>
+  <title>Marvel Pro - Multiverse Immersive Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Memastikan kelas hidden berfungsi sempurna */
@@ -19,7 +19,7 @@
       animation: emergencyAlert 0.8s infinite ease-in-out;
     }
 
-    /* FITUR BARU: Animasi Ledakan / Blast Flash Reaktor */
+    /* Animasi Ledakan Reaktor */
     @keyframes blastFlash {
       0% { background-color: #0f172a; }
       15% { background-color: #991b1b; box-shadow: inset 0 0 100px 50px rgba(239, 68, 68, 0.9); }
@@ -31,18 +31,24 @@
       animation: blastFlash 1.2s ease-in-out;
     }
 
-    /* Efek Tema Dimensi Multiverse (Dr. Strange Realm) */
+    /* Efek Tema Dimensi Multiverse (Latar Belakang Pahlawan & Kosmik Marvel) */
     body.multiverse-realm {
-      background-color: #1e1b4b !important;
+      background: linear-gradient(rgba(30, 27, 75, 0.88), rgba(15, 23, 42, 0.92)), 
+                  url('https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=1200') !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-attachment: fixed !important;
     }
     body.multiverse-realm header {
-      background-color: #311042 !important;
+      background-color: rgba(49, 16, 66, 0.9) !important;
       border-bottom: 2px solid #a855f7;
+      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
     }
     body.multiverse-realm .tab-content {
-      background-color: #2e1065 !important;
+      background-color: rgba(46, 16, 101, 0.88) !important;
       border-color: #a855f7 !important;
-      box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
+      box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+      backdrop-filter: blur(8px);
     }
     body.multiverse-realm h1, body.multiverse-realm h2, body.multiverse-realm .text-blue-400 {
       color: #e879f9 !important;
@@ -58,12 +64,12 @@
     }
   </style>
 </head>
-<body id="mainBody" class="bg-slate-900 text-white min-h-screen flex flex-col justify-between transition-colors duration-500">
+<body id="mainBody" class="bg-slate-900 text-white min-h-screen flex flex-col justify-between transition-all duration-700">
 
   <!-- Header & Menu Navigasi -->
   <header class="p-5 bg-slate-800 shadow-lg text-center transition-colors duration-500">
     <h1 id="mainTitle" class="text-xl font-bold text-blue-400">MAESTRO MARVEL</h1>
-    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Stark Control Room</p>
+    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Multiverse Portal</p>
     
     <nav class="flex justify-center gap-4 text-xs font-medium border-t border-slate-700 pt-3">
       <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors">Beranda</button>
@@ -81,7 +87,7 @@
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Selamat Datang di Dunia Marvel</h2>
       
       <div class="space-y-3 mb-4">
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
           <h3 class="font-bold text-blue-300 mb-1 text-sm">🌌 Sistem Kendali & Lab Stark</h3>
           <p class="text-xs text-slate-300 leading-relaxed">
             Jelajahi karakter, aktifkan sinyal darurat, buka Portal Multiverse, atau uji stabilitas reaktor Arc di bawah!
@@ -89,7 +95,7 @@
         </div>
 
         <!-- Simulator Reaktor Arc -->
-        <div class="bg-slate-900 p-4 rounded-xl border border-slate-700">
+        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
           <h3 class="font-bold text-cyan-400 mb-1 text-sm">⚛️ Simulator Reaktor Arc</h3>
           <p class="text-xs text-slate-300 mb-3">Jaga stabilitas inti reaktor agar tidak terjadi ledakan sistem Stark!</p>
           
@@ -142,7 +148,7 @@
 
       <div id="characterList" class="space-y-3">
         <!-- Karakter 1 -->
-        <div class="char-card bg-slate-900 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="iron man" onclick="showDetail('Iron Man', 'Miliarder jenius pencipta teknologi zirah canggih.', 'Kekuatan: Teknologi & Kecerdasan Jenius', 'https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150')">
+        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="iron man" onclick="showDetail('Iron Man', 'Miliarder jenius pencipta teknologi zirah canggih.', 'Kekuatan: Teknologi & Kecerdasan Jenius', 'https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150')">
           <div class="flex items-center gap-3">
             <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150" alt="Iron Man" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
             <div>
@@ -154,7 +160,7 @@
         </div>
 
         <!-- Karakter 2 -->
-        <div class="char-card bg-slate-900 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="spider-man" onclick="showDetail('Spider-Man', 'Pahlawan ramah lingkungan dengan kemampuan laba-laba.', 'Kekuatan: Kelincahan & Laba-laba', 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150')">
+        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="spider-man" onclick="showDetail('Spider-Man', 'Pahlawan ramah lingkungan dengan kemampuan laba-laba.', 'Kekuatan: Kelincahan & Laba-laba', 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150')">
           <div class="flex items-center gap-3">
             <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150" alt="Spider-Man" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
             <div>
@@ -166,7 +172,7 @@
         </div>
 
         <!-- Karakter 3 -->
-        <div class="char-card bg-slate-900 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="thor" onclick="showDetail('Thor', 'Dewa petir dari Asgard pemegang palu Mjolnir.', 'Kekuatan: Dewa Petir & Kekuatan Kosmik', 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150')">
+        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="thor" onclick="showDetail('Thor', 'Dewa petir dari Asgard pemegang palu Mjolnir.', 'Kekuatan: Dewa Petir & Kekuatan Kosmik', 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150')">
           <div class="flex items-center gap-3">
             <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150" alt="Thor" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
             <div>
@@ -190,7 +196,7 @@
     <!-- 4. Tentang -->
     <div id="content-tentang" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Tentang Pengembang</h2>
-      <div class="space-y-2 text-sm text-slate-300 mb-4 bg-slate-900 p-4 rounded-xl border border-slate-700">
+      <div class="space-y-2 text-sm text-slate-300 mb-4 bg-slate-900/80 p-4 rounded-xl border border-slate-700">
         <p><strong class="text-blue-300">Nama:</strong> Rizky Aditya Marvel</p>
         <p><strong class="text-blue-300">Keahlian:</strong> Teknik Jaringan dan Telekomunikasi</p>
         <p><strong class="text-blue-300">Email:</strong> rizkymarvell28@gmail.com</p>
@@ -226,7 +232,7 @@
     </div>
   </div>
 
-  <!-- JavaScript Logika Lengkap & Animasi Ledakan -->
+  <!-- JavaScript Logika Lengkap -->
   <script>
     let favorites = [];
     let isEmergencyActive = false;
@@ -234,7 +240,6 @@
     let audioCtx = null;
     let alarmTimer = null;
 
-    // Variabel Mini-Game Reaktor Arc
     let reactorActive = false;
     let reactorStability = 100;
     let reactorTimeLeft = 15;
@@ -256,7 +261,6 @@
       }
     }
 
-    // Filter Karakter
     function filterCharacters() {
       let query = document.getElementById('searchInput').value.toLowerCase();
       document.querySelectorAll('.char-card').forEach(card => {
@@ -265,7 +269,6 @@
       });
     }
 
-    // Detail Karakter
     function showDetail(title, desc, power, imgUrl) {
       document.getElementById('detailTitle').innerText = title;
       document.getElementById('detailDesc').innerText = desc;
@@ -282,7 +285,6 @@
       }, 10);
     }
 
-    // Favorit
     function addFavorite(charName) {
       if (!favorites.includes(charName)) {
         favorites.push(charName);
@@ -309,7 +311,6 @@
       });
     }
 
-    // Web Audio API Sound Generator
     function playTone(freq, type = 'sine', duration = 0.2) {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       try {
@@ -326,7 +327,6 @@
       } catch (e) {}
     }
 
-    // Sinyal Darurat S.H.I.E.L.D.
     function toggleEmergencySignal() {
       const body = document.getElementById('mainBody');
       const text = document.getElementById('emergencyText');
@@ -348,7 +348,6 @@
       }
     }
 
-    // Toggle Portal Multiverse Dr. Strange
     function toggleMultiversePortal() {
       const body = document.getElementById('mainBody');
       const text = document.getElementById('multiverseText');
@@ -361,16 +360,15 @@
         body.classList.add('multiverse-realm');
         text.innerText = "Tutup Portal Multiverse";
         title.innerText = "MAESTRO MULTIVERSE";
-        alert("🌀 PORTAL TERBUKA: Anda telah melintasi dimensi alternatif kosmik Dr. Strange!");
+        alert("🌀 PORTAL TERBUKA: Dimensi alternatif kosmik pahlawan Marvel aktif!");
       } else {
         body.classList.remove('multiverse-realm');
         text.innerText = "Buka Portal Multiverse";
         title.innerText = "MAESTRO MARVEL";
-        alert("✨ Stabilisasi berhasil. Anda kembali ke Dimensi Utama (Earth-616).");
+        alert("✨ Stabilisasi berhasil. Kembali ke Dimensi Utama (Earth-616).");
       }
     }
 
-    // Mini-Game Reaktor Arc Logika
     function startReactorGame() {
       if (reactorActive) return;
       reactorActive = true;
@@ -441,19 +439,17 @@
         document.getElementById('reactorStatusText').innerText = "Status: BERHASIL";
         document.getElementById('reactorStatusText').className = "text-green-400 font-bold";
       } else {
-        playTone(120, 'sawtooth', 0.6); // Suara ledakan rendah bernada tebal
+        playTone(120, 'sawtooth', 0.6);
         triggerExplosionEffect();
         document.getElementById('reactorStatusText').innerText = "Status: OVERLOAD";
         document.getElementById('reactorStatusText').className = "text-red-500 font-bold";
       }
     }
 
-    // FITUR BARU: Efek Animasi Ledakan Visual Di Layar
     function triggerExplosionEffect() {
       const body = document.getElementById('mainBody');
       body.classList.add('explosion-active');
 
-      // Buat elemen pop-up animasi ledakan besar di tengah layar
       const blastOverlay = document.createElement('div');
       blastOverlay.id = 'blastOverlay';
       blastOverlay.className = 'fixed inset-0 bg-red-900/60 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300';
@@ -466,14 +462,12 @@
       `;
       document.body.appendChild(blastOverlay);
 
-      // Hapus efek setelah animasi selesai (1.3 detik)
       setTimeout(() => {
         body.classList.remove('explosion-active');
         if (blastOverlay) blastOverlay.remove();
       }, 1300);
     }
 
-    // Modal Kontrol
     function showWelcome() {
       const modal = document.getElementById('welcomeModal');
       const content = document.getElementById('modalContent');
