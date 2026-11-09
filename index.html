@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Pro - Universe Edition</title>
+  <title>Marvel Pro - Classified Level 10 Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Memastikan kelas hidden berfungsi sempurna */
@@ -89,12 +89,13 @@
   <!-- Header & Menu Navigasi -->
   <header class="p-5 bg-slate-800 shadow-lg text-center transition-colors duration-500">
     <h1 id="mainTitle" class="text-xl font-bold text-blue-400">MARVEL UNIVERSE</h1>
-    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Lore Database</p>
+    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Secure Vault</p>
     
-    <nav class="flex justify-center gap-4 text-xs font-medium border-t border-slate-700 pt-3">
+    <nav class="flex justify-center gap-3 text-xs font-medium border-t border-slate-700 pt-3 flex-wrap">
       <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors">Beranda</button>
       <button onclick="switchTab('karakter')" id="btn-karakter" class="text-slate-300 hover:text-white transition-colors">Karakter</button>
       <button onclick="switchTab('favorit')" id="btn-favorit" class="text-slate-300 hover:text-white transition-colors">Favorit</button>
+      <button onclick="switchTab('rahasia')" id="btn-rahasia" class="text-slate-300 hover:text-yellow-400 transition-colors">🔒 Vault Lvl.10</button>
       <button onclick="switchTab('tentang')" id="btn-tentang" class="text-slate-300 hover:text-white transition-colors">Tentang</button>
     </nav>
   </header>
@@ -265,7 +266,65 @@
       </div>
     </div>
 
-    <!-- 4. Tentang -->
+    <!-- 4. FITUR BARU: Halaman Login & Vault Arsip Rahasia Lvl. 10 -->
+    <div id="content-rahasia" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-yellow-500/50 text-left transition-all duration-500">
+      
+      <!-- Bagian Form Login Agen -->
+      <div id="loginSection">
+        <div class="text-center mb-4">
+          <span class="text-3xl">🔐</span>
+          <h2 class="text-lg font-bold text-yellow-400 mt-1">Akses Vault S.H.I.E.L.D.</h2>
+          <p class="text-[11px] text-slate-400">Masukkan identitas agen untuk membuka arsip tingkat 10.</p>
+        </div>
+        
+        <div class="space-y-3 mb-4">
+          <div>
+            <label class="block text-[11px] text-slate-300 mb-1 font-semibold">Nama Agen:</label>
+            <input type="text" id="agentNameInput" placeholder="cth: Rizky" class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-yellow-500">
+          </div>
+          <div>
+            <label class="block text-[11px] text-slate-300 mb-1 font-semibold">Kode Sandi Akses (Hint: 3000):</label>
+            <input type="password" id="agentPassInput" placeholder="Masukkan kode sandi..." class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-yellow-500">
+          </div>
+        </div>
+
+        <button onclick="verifyAgentLogin()" class="w-full py-3 bg-yellow-600 hover:bg-yellow-500 text-slate-950 font-bold rounded-xl shadow-lg active:scale-95 transition-all text-xs">
+          Verifikasi & Buka Arsip
+        </button>
+      </div>
+
+      <!-- Bagian Halaman Rahasia (Tersembunyi Sebelum Login) -->
+      <div id="classifiedVault" class="hidden space-y-4">
+        <div class="bg-yellow-500/10 border border-yellow-500/40 p-3.5 rounded-xl text-center">
+          <span class="text-2xl">⚡</span>
+          <h3 class="text-sm font-bold text-yellow-400 mt-1">AKSES DITERIMA: LEVEL 10</h3>
+          <p id="welcomeAgentText" class="text-[11px] text-slate-300">Selamat datang, Agen.</p>
+        </div>
+
+        <div class="space-y-3 text-xs text-slate-300">
+          <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-blue-300 mb-1">🌌 Hierarki Kosmik & Entitas Abadi</h4>
+            <p class="text-[11px] text-slate-400 leading-relaxed">
+              Di atas para Avengers, terdapat entitas kosmik penguasa multiverse seperti <strong>The Living Tribunal</strong>, <strong>Eternity</strong>, dan para <strong>Watchers</strong> yang mengawasi jalannya waktu di seluruh dimensi.
+            </p>
+          </div>
+
+          <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-700">
+            <h4 class="font-bold text-purple-300 mb-1">🌀 Protokol Perang Multiverse (Secret Wars)</h4>
+            <p class="text-[11px] text-slate-400 leading-relaxed">
+              Tabrakan antar-realitas (*Incursion*) dapat menghancurkan semesta. Teknologi penjelajahan kuantum dan sihir dimensi Dr. Strange adalah garis pertahanan terakhir untuk menjaga kestabilan Earth-616.
+            </p>
+          </div>
+        </div>
+
+        <button onclick="lockVault()" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl text-xs active:scale-95 transition-all">
+          Kunci Kembali Vault
+        </button>
+      </div>
+
+    </div>
+
+    <!-- 5. Tentang -->
     <div id="content-tentang" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Tentang Pengembang</h2>
       <div class="space-y-2 text-sm text-slate-300 mb-4 bg-slate-900/80 p-4 rounded-xl border border-slate-700">
@@ -336,7 +395,7 @@
     let reactorTimeLeft = 15;
     let reactorInterval = null;
 
-    // Data Ensiklopedia Topik Marvel (Sejarah, Film Pertama, Film Berkesan)
+    // Data Ensiklopedia Topik Marvel
     const loreData = {
       formation: {
         icon: "🏛️",
@@ -383,6 +442,36 @@
       }, 10);
     }
 
+    // Fungsi Login Agen & Vault Lvl 10
+    function verifyAgentLogin() {
+      const name = document.getElementById('agentNameInput').value.trim();
+      const pass = document.getElementById('agentPassInput').value.trim();
+
+      if (!name) {
+        alert("⚠️ Masukkan nama agen terlebih dahulu!");
+        return;
+      }
+
+      // Kode sandi benar (Hint: 3000)
+      if (pass === "3000" || pass === "1963" || pass === "marvel") {
+        playTone(1000, 'sine', 0.3);
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('classifiedVault').classList.remove('hidden');
+        document.getElementById('welcomeAgentText').innerText = `Selamat datang, Agen ${name}. Otoritas Level 10 diaktifkan.`;
+        alert(`🔓 AKSES DIBERIKAN: Selamat datang di Arsip Rahasia Utama, Agent ${name}!`);
+      } else {
+        playTone(200, 'sawtooth', 0.4);
+        alert("❌ KODE SANDI SALAH! Gunakan kode hint '3000' untuk masuk.");
+      }
+    }
+
+    function lockVault() {
+      document.getElementById('loginSection').classList.remove('hidden');
+      document.getElementById('classifiedVault').classList.add('hidden');
+      document.getElementById('agentPassInput').value = "";
+      alert("🔒 Vault berhasil dikunci kembali.");
+    }
+
     // Efek Sentuhan Reaktor (Ripple Effect)
     document.addEventListener('click', function(e) {
       createStarkRipple(e.clientX, e.clientY);
@@ -409,13 +498,16 @@
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('nav button').forEach(btn => {
-        btn.classList.remove('text-blue-400', 'font-bold', 'text-purple-400');
+        btn.classList.remove('text-blue-400', 'font-bold', 'text-purple-400', 'text-yellow-400');
         btn.classList.add('text-slate-300');
       });
       document.getElementById('content-' + tabName).classList.remove('hidden');
       const activeBtn = document.getElementById('btn-' + tabName);
       activeBtn.classList.remove('text-slate-300');
-      if (isMultiverseActive) {
+      
+      if (tabName === 'rahasia') {
+        activeBtn.classList.add('text-yellow-400', 'font-bold');
+      } else if (isMultiverseActive) {
         activeBtn.classList.add('text-purple-400', 'font-bold');
       } else {
         activeBtn.classList.add('text-blue-400', 'font-bold');
