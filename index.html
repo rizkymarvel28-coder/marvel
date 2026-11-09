@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Pro - Classified Level 10 Edition</title>
+  <title>Marvel Pro - J.A.R.V.I.S. AI Edition</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Memastikan kelas hidden berfungsi sempurna */
@@ -87,16 +87,17 @@
 <body id="mainBody" class="bg-slate-900 text-white min-h-screen flex flex-col justify-between transition-all duration-700">
 
   <!-- Header & Menu Navigasi -->
-  <header class="p-5 bg-slate-800 shadow-lg text-center transition-colors duration-500">
+  <header class="p-4 bg-slate-800 shadow-lg text-center transition-colors duration-500">
     <h1 id="mainTitle" class="text-xl font-bold text-blue-400">MARVEL UNIVERSE</h1>
-    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Secure Vault</p>
+    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & J.A.R.V.I.S. AI</p>
     
-    <nav class="flex justify-center gap-3 text-xs font-medium border-t border-slate-700 pt-3 flex-wrap">
-      <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors">Beranda</button>
-      <button onclick="switchTab('karakter')" id="btn-karakter" class="text-slate-300 hover:text-white transition-colors">Karakter</button>
-      <button onclick="switchTab('favorit')" id="btn-favorit" class="text-slate-300 hover:text-white transition-colors">Favorit</button>
-      <button onclick="switchTab('rahasia')" id="btn-rahasia" class="text-slate-300 hover:text-yellow-400 transition-colors">🔒 Vault Lvl.10</button>
-      <button onclick="switchTab('tentang')" id="btn-tentang" class="text-slate-300 hover:text-white transition-colors">Tentang</button>
+    <nav class="flex justify-center gap-2 text-xs font-medium border-t border-slate-700 pt-3 flex-wrap">
+      <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors px-1">Beranda</button>
+      <button onclick="switchTab('karakter')" id="btn-karakter" class="text-slate-300 hover:text-white transition-colors px-1">Karakter</button>
+      <button onclick="switchTab('favorit')" id="btn-favorit" class="text-slate-300 hover:text-white transition-colors px-1">Favorit</button>
+      <button onclick="switchTab('jarvis')" id="btn-jarvis" class="text-slate-300 hover:text-cyan-400 transition-colors px-1">🤖 J.A.R.V.I.S.</button>
+      <button onclick="switchTab('rahasia')" id="btn-rahasia" class="text-slate-300 hover:text-yellow-400 transition-colors px-1">🔒 Vault</button>
+      <button onclick="switchTab('tentang')" id="btn-tentang" class="text-slate-300 hover:text-white transition-colors px-1">Tentang</button>
     </nav>
   </header>
 
@@ -266,7 +267,41 @@
       </div>
     </div>
 
-    <!-- 4. FITUR BARU: Halaman Login & Vault Arsip Rahasia Lvl. 10 -->
+    <!-- 4. FITUR BARU: J.A.R.V.I.S. AI Chat Bot -->
+    <div id="content-jarvis" class="tab-content hidden bg-slate-800 p-5 rounded-2xl shadow-xl w-full border border-cyan-500/50 text-left transition-all duration-500 flex flex-col h-[420px]">
+      <div class="flex items-center justify-between border-b border-slate-700 pb-2 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🤖</span>
+          <div>
+            <h2 class="text-sm font-bold text-cyan-400">J.A.R.V.I.S. Protocol</h2>
+            <p class="text-[10px] text-slate-400">Stark Industries AI Assistant</p>
+          </div>
+        </div>
+        <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+      </div>
+
+      <!-- Area Chat Log -->
+      <div id="chatLog" class="flex-grow bg-slate-900/90 p-3 rounded-xl border border-slate-700 overflow-y-auto space-y-2 text-xs mb-3">
+        <div class="bg-slate-800 p-2.5 rounded-lg border border-slate-700 text-slate-300">
+          <strong class="text-cyan-400">J.A.R.V.I.S.:</strong> Selamat datang di sistem, Agen Rizky Aditya Marvel. Ada yang bisa saya bantu terkait protokol pahlawan atau analisis reaktor?
+        </div>
+      </div>
+
+      <!-- Tombol Pintasan Cepat -->
+      <div class="flex gap-1.5 mb-2 overflow-x-auto pb-1">
+        <button onclick="sendQuickPrompt('Status Reaktor')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-700 border border-cyan-500/40 rounded-lg text-[10px] text-cyan-300 shrink-0">⚡ Status Reaktor</button>
+        <button onclick="sendQuickPrompt('Siapa Pembuat?')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-700 border border-cyan-500/40 rounded-lg text-[10px] text-cyan-300 shrink-0">👨‍💻 Pembuat Web</button>
+        <button onclick="sendQuickPrompt('Sinyal Darurat')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-700 border border-cyan-500/40 rounded-lg text-[10px] text-cyan-300 shrink-0">🚨 Info Darurat</button>
+      </div>
+
+      <!-- Input Chat -->
+      <div class="flex gap-2">
+        <input type="text" id="chatInput" onkeypress="handleChatKey(event)" placeholder="Ketik pesan ke J.A.R.V.I.S...." class="flex-grow px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
+        <button onclick="sendUserMessage()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-xl text-xs transition-colors">Kirim</button>
+      </div>
+    </div>
+
+    <!-- 5. Vault Arsip Rahasia Lvl. 10 -->
     <div id="content-rahasia" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-yellow-500/50 text-left transition-all duration-500">
       
       <!-- Bagian Form Login Agen -->
@@ -293,7 +328,7 @@
         </button>
       </div>
 
-      <!-- Bagian Halaman Rahasia (Tersembunyi Sebelum Login) -->
+      <!-- Bagian Halaman Rahasia -->
       <div id="classifiedVault" class="hidden space-y-4">
         <div class="bg-yellow-500/10 border border-yellow-500/40 p-3.5 rounded-xl text-center">
           <span class="text-2xl">⚡</span>
@@ -324,7 +359,7 @@
 
     </div>
 
-    <!-- 5. Tentang -->
+    <!-- 6. Tentang -->
     <div id="content-tentang" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
       <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Tentang Pengembang</h2>
       <div class="space-y-2 text-sm text-slate-300 mb-4 bg-slate-900/80 p-4 rounded-xl border border-slate-700">
@@ -442,6 +477,62 @@
       }, 10);
     }
 
+    // Logika J.A.R.V.I.S. Chat Bot
+    function sendQuickPrompt(promptText) {
+      document.getElementById('chatInput').value = promptText;
+      sendUserMessage();
+    }
+
+    function handleChatKey(e) {
+      if (e.key === 'Enter') {
+        sendUserMessage();
+      }
+    }
+
+    function sendUserMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatLog = document.getElementById('chatLog');
+      
+      // Tambahkan pesan User
+      chatLog.innerHTML += `
+        <div class="bg-blue-950/80 p-2.5 rounded-lg border border-blue-800 text-blue-200 text-right">
+          <strong class="text-blue-400">Anda:</strong> ${text}
+        </div>
+      `;
+      input.value = "";
+      chatLog.scrollTop = chatLog.scrollHeight;
+      playTone(900, 'sine', 0.1);
+
+      // Respon J.A.R.V.I.S. berdasarkan keyword
+      setTimeout(() => {
+        let reply = "Perintah diterima, Agen. Analisis data jaringan dan protokol keamanan sedang berjalan.";
+        const lower = text.toLowerCase();
+
+        if (lower.includes('reaktor') || lower.includes('reactor')) {
+          reply = reactorActive ? `⚠️ Reaktor Arc sedang diuji! Stabilitas saat ini berada di angka ${reactorStability}%. Segera stabilkan!` : "✅ Inti Reaktor Arc dalam kondisi aman dan stabil 100%.";
+        } else if (lower.includes('pembuat') || lower.includes('rizky') || lower.includes('siapa')) {
+          reply = "Sistem mengonfirmasi website ini dirancang oleh Agen Rizky Aditya Marvel, ahli di bidang Teknik Jaringan dan Telekomunikasi.";
+        } else if (lower.includes('darurat') || lower.includes('emergency')) {
+          reply = isEmergencyActive ? "🚨 Peringatan darurat S.H.I.E.L.D. sedang aktif!" : "Situasi wilayah terpantau aman terkendali. Tidak ada ancaman aktif.";
+        } else if (lower.includes('halo') || lower.includes('hi') || lower.includes('jarvis')) {
+          reply = "Salam hormat, Agen Rizky. Semua sistem Stark Industries beroperasi secara optimal.";
+        } else if (lower.includes('multiverse') || lower.includes('portal')) {
+          reply = isMultiverseActive ? "🌀 Portal Multiverse sedang terbuka! Hati-hati terhadap fluktuasi dimensi." : "Dimensi utama (Earth-616) stabil.";
+        }
+
+        chatLog.innerHTML += `
+          <div class="bg-slate-800 p-2.5 rounded-lg border border-slate-700 text-slate-300">
+            <strong class="text-cyan-400">J.A.R.V.I.S.:</strong> ${reply}
+          </div>
+        `;
+        chatLog.scrollTop = chatLog.scrollHeight;
+        playTone(1100, 'sine', 0.15);
+      }, 500);
+    }
+
     // Fungsi Login Agen & Vault Lvl 10
     function verifyAgentLogin() {
       const name = document.getElementById('agentNameInput').value.trim();
@@ -452,7 +543,6 @@
         return;
       }
 
-      // Kode sandi benar (Hint: 3000)
       if (pass === "3000" || pass === "1963" || pass === "marvel") {
         playTone(1000, 'sine', 0.3);
         document.getElementById('loginSection').classList.add('hidden');
@@ -498,7 +588,7 @@
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('nav button').forEach(btn => {
-        btn.classList.remove('text-blue-400', 'font-bold', 'text-purple-400', 'text-yellow-400');
+        btn.classList.remove('text-blue-400', 'font-bold', 'text-purple-400', 'text-yellow-400', 'text-cyan-400');
         btn.classList.add('text-slate-300');
       });
       document.getElementById('content-' + tabName).classList.remove('hidden');
@@ -507,6 +597,8 @@
       
       if (tabName === 'rahasia') {
         activeBtn.classList.add('text-yellow-400', 'font-bold');
+      } else if (tabName === 'jarvis') {
+        activeBtn.classList.add('text-cyan-400', 'font-bold');
       } else if (isMultiverseActive) {
         activeBtn.classList.add('text-purple-400', 'font-bold');
       } else {
