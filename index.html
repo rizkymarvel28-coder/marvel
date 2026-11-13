@@ -1,1035 +1,178 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Pro - Battle Arena Edition</title>
+  <title>Rindang Kebun Jati - Ekowisata & Kuliner Alam</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Memastikan kelas hidden berfungsi sempurna */
     .hidden { display: none !important; }
-
-    /* Animasi Kedip Lampu Darurat S.H.I.E.L.D. */
-    @keyframes emergencyAlert {
-      0% { background-color: #0f172a; box-shadow: inset 0 0 0 0 rgba(239, 68, 68, 0); }
-      50% { background-color: #450a0a; box-shadow: inset 0 0 50px 20px rgba(239, 68, 68, 0.6); }
-      100% { background-color: #0f172a; box-shadow: inset 0 0 0 0 rgba(239, 68, 68, 0); }
-    }
-    .emergency-active {
-      animation: emergencyAlert 0.8s infinite ease-in-out;
-    }
-
-    /* Animasi Ledakan Reaktor */
-    @keyframes blastFlash {
-      0% { background-color: #0f172a; }
-      15% { background-color: #991b1b; box-shadow: inset 0 0 100px 50px rgba(239, 68, 68, 0.9); }
-      40% { background-color: #450a0a; }
-      70% { background-color: #991b1b; box-shadow: inset 0 0 80px 30px rgba(239, 68, 68, 0.7); }
-      100% { background-color: #0f172a; }
-    }
-    .explosion-active {
-      animation: blastFlash 1.2s ease-in-out;
-    }
-
-    /* Efek Gelombang Sentuhan Reaktor (Stark Touch Ripple) */
     @keyframes rippleEffect {
-      0% { transform: scale(0); opacity: 0.9; }
-      100% { transform: scale(4.5); opacity: 0; }
+      0% { transform: scale(0); opacity: 0.8; }
+      100% { transform: scale(4); opacity: 0; }
     }
-    .stark-ripple {
+    .ripple {
       position: fixed;
       border-radius: 50%;
       transform: scale(0);
-      animation: rippleEffect 0.6s linear forwards;
+      animation: rippleEffect 0.5s linear forwards;
       pointer-events: none;
-      background: radial-gradient(circle, rgba(6, 182, 212, 0.9) 0%, rgba(59, 130, 246, 0.5) 50%, transparent 100%);
-      width: 60px;
-      height: 60px;
-      margin-top: -30px;
-      margin-left: -30px;
+      background: rgba(16, 185, 129, 0.4);
+      width: 50px;
+      height: 50px;
+      margin-top: -25px;
+      margin-left: -25px;
       z-index: 9999;
-      box-shadow: 0 0 15px rgba(6, 182, 212, 0.8);
-    }
-
-    /* Animasi Serangan / Guncangan Karakter */
-    @keyframes shake {
-      0% { transform: translate(0, 0); }
-      20% { transform: translate(-6px, 0); }
-      40% { transform: translate(6px, 0); }
-      60% { transform: translate(-4px, 0); }
-      80% { transform: translate(4px, 0); }
-      100% { transform: translate(0, 0); }
-    }
-    .shake-anim {
-      animation: shake 0.4s ease-in-out;
-    }
-
-    /* Efek Tema Dimensi Multiverse */
-    body.multiverse-realm {
-      background: linear-gradient(rgba(30, 27, 75, 0.88), rgba(15, 23, 42, 0.92)), 
-                  url('https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=1200') !important;
-      background-size: cover !important;
-      background-position: center !important;
-      background-attachment: fixed !important;
-    }
-    body.multiverse-realm header {
-      background-color: rgba(49, 16, 66, 0.9) !important;
-      border-bottom: 2px solid #a855f7;
-      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
-    }
-    body.multiverse-realm .tab-content {
-      background-color: rgba(46, 16, 101, 0.88) !important;
-      border-color: #a855f7 !important;
-      box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
-      backdrop-filter: blur(8px);
-    }
-    body.multiverse-realm h1, body.multiverse-realm h2, body.multiverse-realm .text-blue-400 {
-      color: #e879f9 !important;
-    }
-    body.multiverse-realm .text-blue-300 {
-      color: #f0abfc !important;
-    }
-    body.multiverse-realm button.bg-blue-600 {
-      background-color: #9333ea !important;
-    }
-    body.multiverse-realm button.bg-blue-600:hover {
-      background-color: #7e22ce !important;
     }
   </style>
 </head>
-<body id="mainBody" class="bg-slate-900 text-white min-h-screen flex flex-col justify-between transition-all duration-700">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between font-sans">
 
-  <!-- Header & Menu Navigasi -->
-  <header class="p-4 bg-slate-800 shadow-lg text-center transition-colors duration-500">
-    <h1 id="mainTitle" class="text-xl font-bold text-blue-400">MARVEL UNIVERSE</h1>
-    <p class="text-xs text-slate-400 mb-3">Mobile Web Experience & Battle Arena</p>
-    
-    <nav class="flex justify-center gap-2 text-xs font-medium border-t border-slate-700 pt-3 flex-wrap">
-      <button onclick="switchTab('beranda')" id="btn-beranda" class="text-blue-400 font-bold hover:underline transition-colors px-1">Beranda</button>
-      <button onclick="switchTab('karakter')" id="btn-karakter" class="text-slate-300 hover:text-white transition-colors px-1">Karakter</button>
-      <button onclick="switchTab('arena')" id="btn-arena" class="text-slate-300 hover:text-red-400 transition-colors px-1">⚔️ Arena</button>
-      <button onclick="switchTab('favorit')" id="btn-favorit" class="text-slate-300 hover:text-white transition-colors px-1">Favorit</button>
-      <button onclick="switchTab('jarvis')" id="btn-jarvis" class="text-slate-300 hover:text-cyan-400 transition-colors px-1">🤖 AI</button>
-      <button onclick="switchTab('rahasia')" id="btn-rahasia" class="text-slate-300 hover:text-yellow-400 transition-colors px-1">🔒 Vault</button>
-      <button onclick="switchTab('tentang')" id="btn-tentang" class="text-slate-300 hover:text-white transition-colors px-1">Tentang</button>
-    </nav>
+  <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-emerald-500/30 px-4 py-3">
+    <div class="max-w-md mx-auto flex justify-between items-center">
+      <a href="#" class="font-bold text-base text-emerald-400 flex items-center gap-1.5">
+        <span>🌳</span> Rindang Kebun Jati
+      </a>
+      <nav class="flex gap-3 text-xs font-medium text-slate-300">
+        <a href="#beranda" class="hover:text-emerald-400 transition-colors">Beranda</a>
+        <a href="#layanan" class="hover:text-emerald-400 transition-colors">Layanan</a>
+        <a href="#reservasi" class="hover:text-emerald-400 transition-colors">Reservasi</a>
+      </nav>
+    </div>
   </header>
 
-  <!-- Konten Utama -->
-  <main class="p-5 max-w-md mx-auto w-full flex-grow flex flex-col items-center justify-center">
+  <main class="max-w-md mx-auto w-full p-4 space-y-6 flex-grow">
     
-    <!-- 1. Beranda -->
-    <div id="content-beranda" class="tab-content bg-slate-800 p-6 rounded-2xl shadow-xl text-left w-full border border-slate-700 transition-all duration-500">
-      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Pusat Informasi Marvel</h2>
+    <section id="beranda" class="relative rounded-3xl overflow-hidden border border-emerald-500/30 bg-slate-900 shadow-2xl p-6 text-center">
+      <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800');"></div>
+      <div class="relative z-10 space-y-3 py-4">
+        <span class="inline-block px-3 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[10px] font-bold rounded-full uppercase tracking-wider">
+          🌿 Ekowisata & Kuliner Asri
+        </span>
+        <h1 class="text-2xl font-black text-white leading-tight">
+          Ketenangan Alam di Bawah Naungan <span class="text-emerald-400">Pohon Jati</span>
+        </h1>
+        <p class="text-xs text-slate-300 leading-relaxed px-2">
+          Nikmati suasana sejuk kebun jati, kuliner khas pedesaan, spot foto estetik, dan ruang santai terbaik untuk keluarga serta komunitas Anda.
+        </p>
+        <div class="pt-2 flex gap-2 justify-center">
+          <a href="#reservasi" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs shadow-lg transition-all active:scale-95">
+            Pesan Tempat Sekarang
+          </a>
+          <a href="#layanan" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-xl text-xs transition-all active:scale-95">
+            Lihat Menu
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="layanan" class="space-y-3">
+      <h2 class="text-sm font-bold text-emerald-400 flex items-center gap-2">
+        <span>✨</span> Fasilitas & Layanan Unggulan
+      </h2>
       
-      <div class="space-y-3 mb-4">
-        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
-          <h3 class="font-bold text-blue-300 mb-1 text-sm">📖 Ensiklopedia & Sejarah Marvel</h3>
-          <p class="text-xs text-slate-300 leading-relaxed mb-3">
-            Pelajari sejarah awal mula terbentuknya Marvel, film pertama, hingga film paling berkesan di bawah ini!
-          </p>
-
-          <div class="border-t border-slate-700 pt-3">
-            <p class="text-[11px] font-semibold text-blue-400 mb-2">✨ PILIH TOPIK ARSIP MARVEL:</p>
-            <div class="grid grid-cols-3 gap-2">
-              <button onclick="openLore('formation')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
-                🏛️ Sejarah
-              </button>
-              <button onclick="openLore('firstmovie')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
-                🎬 Film Pertama
-              </button>
-              <button onclick="openLore('iconicmovie')" class="py-2 px-1 bg-slate-800 hover:bg-slate-700 border border-blue-500/50 rounded-xl text-[11px] font-medium text-blue-300 active:scale-95 transition-all">
-                🌟 Film Berkesan
-              </button>
-            </div>
-          </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl space-y-2 hover:border-emerald-500/50 transition-all">
+          <div class="text-2xl">☕</div>
+          <h3 class="font-bold text-xs text-white">Cafe & Kedai Kopi</h3>
+          <p class="text-[11px] text-slate-400 leading-relaxed">Menu makanan tradisional & kopi nusantara di tengah rindangnya pepohonan.</p>
         </div>
-
-        <!-- Simulator Reaktor Arc -->
-        <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700">
-          <h3 class="font-bold text-cyan-400 mb-1 text-sm">⚛️ Simulator Reaktor Arc</h3>
-          <p class="text-xs text-slate-300 mb-3">Jaga stabilitas inti reaktor agar tidak terjadi ledakan sistem Stark!</p>
-          
-          <div id="reactorGameArea" class="hidden space-y-2 mb-3">
-            <div class="flex justify-between text-xs font-semibold">
-              <span id="reactorStatusText" class="text-yellow-400">Status: SIAGA</span>
-              <span id="reactorTimerText" class="text-slate-300">Waktu: 15s</span>
-            </div>
-            <div class="w-full bg-slate-800 rounded-full h-3 overflow-hidden border border-slate-700">
-              <div id="reactorBar" class="bg-cyan-400 h-full transition-all duration-150" style="width: 100%;"></div>
-            </div>
-            <p id="reactorMessage" class="text-[11px] text-slate-400 text-center">Ketuk tombol di bawah secepat mungkin untuk mengisi energi!</p>
-          </div>
-
-          <div class="flex gap-2">
-            <button id="btnStartReactor" onclick="startReactorGame()" class="flex-1 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-xs">
-              Mulai Uji Reaktor
-            </button>
-            <button id="btnTapReactor" onclick="tapReactor()" class="hidden flex-1 py-2.5 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-xs animate-pulse">
-              ⚡ STABILKAN!
-            </button>
-          </div>
+        <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl space-y-2 hover:border-emerald-500/50 transition-all">
+          <div class="text-2xl">🏕️</div>
+          <h3 class="font-bold text-xs text-white">Camping & Gathering</h3>
+          <p class="text-[11px] text-slate-400 leading-relaxed">Area luas dan asri untuk acara keluarga, outbound, maupun kumpul komunitas.</p>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl space-y-2 hover:border-emerald-500/50 transition-all">
+          <div class="text-2xl">📸</div>
+          <h3 class="font-bold text-xs text-white">Spot Foto Estetik</h3>
+          <p class="text-[11px] text-slate-400 leading-relaxed">Sudut-sudut alami berlatar hutan jati yang sangat instagramable.</p>
+        </div>
+        <div class="bg-slate-900/90 border border-slate-800 p-3.5 rounded-2xl space-y-2 hover:border-emerald-500/50 transition-all">
+          <div class="text-2xl">🌱</div>
+          <h3 class="font-bold text-xs text-white">Bibit & Edukasi Jati</h3>
+          <p class="text-[11px] text-slate-400 leading-relaxed">Pusat pembibitan pohon jati unggul dan wisata edukasi tanaman.</p>
         </div>
       </div>
+    </section>
 
-      <div class="space-y-2.5">
-        <button onclick="showWelcome()" class="w-full py-3 bg-blue-600 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-700 active:scale-95 transition-all text-sm">
-          Ubah Status Sistem
-        </button>
-        <button id="btnEmergency" onclick="toggleEmergencySignal()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2">
-          <span>🚨</span> <span id="emergencyText">Kirim Sinyal Darurat</span>
-        </button>
-        <button id="btnMultiverse" onclick="toggleMultiversePortal()" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl shadow-lg active:scale-95 transition-all text-sm flex items-center justify-center gap-2">
-          <span>🌀</span> <span id="multiverseText">Buka Portal Multiverse</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- 2. Karakter -->
-    <div id="content-karakter" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
-      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Daftar Anggota Marvel</h2>
-      
-      <div class="mb-4">
-        <input type="text" id="searchInput" onkeyup="filterCharacters()" placeholder="Cari pahlawan (cth: Iron Man)..." class="w-full px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500">
+    <section id="reservasi" class="bg-slate-900 border border-emerald-500/40 p-5 rounded-3xl space-y-4 shadow-xl">
+      <div class="text-center space-y-1">
+        <h2 class="text-base font-bold text-emerald-400">📝 Form Reservasi & Pemesanan</h2>
+        <p class="text-[11px] text-slate-400">Isi data di bawah, pesanan akan langsung terkirim ke WhatsApp pengelola.</p>
       </div>
 
-      <div id="characterList" class="space-y-3 max-h-[350px] overflow-y-auto pr-1">
-        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="iron man" onclick="showDetail('Iron Man', 'Miliarder jenius pencipta teknologi zirah canggih.', 'Kekuatan: Teknologi Armor & Kecerdasan Jenius', 'https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150')">
-          <div class="flex items-center gap-3">
-            <img src="https://images.unsplash.com/photo-1635863138275-d9b33299680b?w=150" alt="Iron Man" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
-            <div>
-              <h3 class="font-bold text-blue-300 text-sm">Iron Man</h3>
-              <p class="text-[11px] text-slate-400">Tony Stark</p>
-            </div>
-          </div>
-          <button onclick="event.stopPropagation(); addFavorite('Iron Man')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-300 mb-1 font-medium">Nama Lengkap:</label>
+          <input type="text" id="custName" placeholder="Masukkan nama Anda..." class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-emerald-500">
         </div>
 
-        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="captain america" onclick="showDetail('Captain America', 'Prajurit super pertama pelindung kebebasan pemegang perisai vibranium.', 'Kekuatan: Super Soldier & Ahli Strategi', 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150')">
-          <div class="flex items-center gap-3">
-            <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150" alt="Captain America" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
-            <div>
-              <h3 class="font-bold text-blue-300 text-sm">Captain America</h3>
-              <p class="text-[11px] text-slate-400">Steve Rogers</p>
-            </div>
-          </div>
-          <button onclick="event.stopPropagation(); addFavorite('Captain America')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
+        <div>
+          <label class="block text-slate-300 mb-1 font-medium">Pilih Layanan / Keperluan:</label>
+          <select id="custService" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-emerald-500">
+            <option value="Reservasi Meja / Cafe">☕ Reservasi Meja / Cafe</option>
+            <option value="Sewa Tempat / Gathering">🏕️ Sewa Tempat / Gathering / Outbound</option>
+            <option value="Pemesanan Bibit Jati">🌱 Pemesanan Bibit / Tanaman Jati</option>
+            <option value="Lainnya">Lainnya</option>
+          </select>
         </div>
 
-        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="thor" onclick="showDetail('Thor', 'Dewa petir dari Asgard pemegang palu Mjolnir dan kapak Stormbreaker.', 'Kekuatan: Dewa Petir & Kekuatan Kosmik', 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150')">
-          <div class="flex items-center gap-3">
-            <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=150" alt="Thor" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
-            <div>
-              <h3 class="font-bold text-blue-300 text-sm">Thor Odinson</h3>
-              <p class="text-[11px] text-slate-400">Dewa Petir Asgard</p>
-            </div>
-          </div>
-          <button onclick="event.stopPropagation(); addFavorite('Thor')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
-        </div>
-
-        <div class="char-card bg-slate-900/90 p-3.5 rounded-xl border border-slate-700 flex items-center justify-between cursor-pointer hover:border-blue-500 transition-all" data-name="spider-man" onclick="showDetail('Spider-Man', 'Pahlawan remaja ramah lingkungan dengan kemampuan laba-laba.', 'Kekuatan: Laba-laba & Kelincahan Tinggi', 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150')">
-          <div class="flex items-center gap-3">
-            <img src="https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=150" alt="Spider-Man" class="w-12 h-12 rounded-lg object-cover border border-slate-700 shrink-0">
-            <div>
-              <h3 class="font-bold text-blue-300 text-sm">Spider-Man</h3>
-              <p class="text-[11px] text-slate-400">Peter Parker</p>
-            </div>
-          </div>
-          <button onclick="event.stopPropagation(); addFavorite('Spider-Man')" class="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 rounded-lg text-[10px] font-semibold transition-colors">⭐ Favorit</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 3. FITUR BARU: Mini-Game Arena Perang Pahlawan -->
-    <div id="content-arena" class="tab-content hidden bg-slate-800 p-5 rounded-2xl shadow-xl w-full border border-red-500/50 text-left transition-all duration-500">
-      <div class="text-center mb-3">
-        <h2 class="text-lg font-bold text-red-400">⚔️ ARENA PERANG PAHLAWAN</h2>
-        <p class="text-[11px] text-slate-400">Pilih pahlawan Anda dan kalahkan musuh kosmik!</p>
-      </div>
-
-      <!-- Pilihan Pahlawan (Sebelum Battle) -->
-      <div id="heroSelectArea" class="space-y-3">
-        <p class="text-xs font-semibold text-slate-300">1. Pilih Pahlawan Anda:</p>
-        <div class="grid grid-cols-3 gap-2">
-          <button onclick="selectHero('Iron Man', 100, '⚡ Repulsor Beam')" class="p-2.5 bg-slate-900 border border-slate-700 hover:border-blue-500 rounded-xl text-center text-xs font-bold text-blue-300 active:scale-95 transition-all">
-            🤖 Iron Man
-          </button>
-          <button onclick="selectHero('Thor', 120, '🔨 Mjolnir Strike')" class="p-2.5 bg-slate-900 border border-slate-700 hover:border-yellow-500 rounded-xl text-center text-xs font-bold text-yellow-300 active:scale-95 transition-all">
-            ⚡ Thor
-          </button>
-          <button onclick="selectHero('Captain America', 110, '🛡️ Shield Bash')" class="p-2.5 bg-slate-900 border border-slate-700 hover:border-red-500 rounded-xl text-center text-xs font-bold text-red-300 active:scale-95 transition-all">
-            🛡️ Captain
-          </button>
-        </div>
-
-        <p class="text-xs font-semibold text-slate-300 pt-2">2. Pilih Musuh:</p>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="selectVillain('Thanos', 140)" id="btnVillainThanos" class="p-2.5 bg-purple-950/60 border border-purple-700 rounded-xl text-center text-xs font-bold text-purple-300">
-            🟣 Thanos (HP: 140)
-          </button>
-          <button onclick="selectVillain('Ultron', 120)" id="btnVillainUltron" class="p-2.5 bg-red-950/60 border border-red-700 rounded-xl text-center text-xs font-bold text-red-300">
-            🤖 Ultron (HP: 120)
-          </button>
-        </div>
-
-        <button onclick="startBattle()" class="w-full py-3 mt-3 bg-red-600 hover:bg-red-500 text-white font-bold rounded-xl shadow-lg active:scale-95 transition-all text-xs">
-          MULAI PERTEMPURAN! ⚔️
-        </button>
-      </div>
-
-      <!-- Arena Pertarungan Aktif -->
-      <div id="battleActiveArea" class="hidden space-y-3">
-        <!-- Status Kartu Pertarungan -->
-        <div class="grid grid-cols-2 gap-2 text-center text-xs">
-          <div id="playerCard" class="bg-slate-900 p-3 rounded-xl border border-blue-500/50">
-            <h3 id="battleHeroName" class="font-bold text-blue-400">Hero</h3>
-            <p class="text-[10px] text-slate-400 mb-1">HP: <span id="playerHpText">100</span></p>
-            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
-              <div id="playerHpBar" class="bg-blue-500 h-full transition-all duration-300" style="width: 100%;"></div>
-            </div>
-          </div>
-
-          <div id="enemyCard" class="bg-slate-900 p-3 rounded-xl border border-red-500/50">
-            <h3 id="battleEnemyName" class="font-bold text-red-400">Villain</h3>
-            <p class="text-[10px] text-slate-400 mb-1">HP: <span id="enemyHpText">140</span></p>
-            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
-              <div id="enemyHpBar" class="bg-red-500 h-full transition-all duration-300" style="width: 100%;"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Log Pertarungan -->
-        <div id="battleLog" class="bg-slate-900 p-3 rounded-xl border border-slate-700 text-[11px] text-slate-300 h-24 overflow-y-auto leading-relaxed">
-          <p class="text-yellow-400">⚡ Pertarungan dimulai! Pilih aksi serangan Anda di bawah.</p>
-        </div>
-
-        <!-- Tombol Aksi Pertarungan -->
-        <div id="battleActionButtons" class="grid grid-cols-2 gap-2">
-          <button onclick="playerAttack('light')" class="py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl text-xs active:scale-95 transition-all">
-            ⚔️ Serangan Cepat
-          </button>
-          <button onclick="playerAttack('heavy')" class="py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-semibold rounded-xl text-xs active:scale-95 transition-all">
-            🔥 Serangan Spesial
-          </button>
-        </div>
-
-        <!-- Tombol Reset / Kembali -->
-        <button id="btnResetBattle" onclick="resetBattle()" class="hidden w-full py-2.5 bg-slate-700 hover:bg-slate-600 text-white font-semibold rounded-xl text-xs active:scale-95 transition-all">
-          🔄 Pilih Pahlawan Lain
-        </button>
-      </div>
-
-    </div>
-
-    <!-- 4. Favorit -->
-    <div id="content-favorit" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
-      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Karakter Favorit Anda</h2>
-      <div id="favoriteList" class="space-y-2">
-        <p class="text-slate-400 text-xs text-center py-4">Belum ada karakter favorit. Tambahkan dari menu Karakter!</p>
-      </div>
-    </div>
-
-    <!-- 5. J.A.R.V.I.S. AI Chat Bot -->
-    <div id="content-jarvis" class="tab-content hidden bg-slate-800 p-5 rounded-2xl shadow-xl w-full border border-cyan-500/50 text-left transition-all duration-500 flex flex-col h-[420px]">
-      <div class="flex items-center justify-between border-b border-slate-700 pb-2 mb-3">
-        <div class="flex items-center gap-2">
-          <span class="text-xl">🤖</span>
           <div>
-            <h2 class="text-sm font-bold text-cyan-400">J.A.R.V.I.S. Protocol</h2>
-            <p class="text-[10px] text-slate-400">Stark Industries AI Assistant</p>
-          </div>
-        </div>
-        <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
-      </div>
-
-      <div id="chatLog" class="flex-grow bg-slate-900/90 p-3 rounded-xl border border-slate-700 overflow-y-auto space-y-2 text-xs mb-3">
-        <div class="bg-slate-800 p-2.5 rounded-lg border border-slate-700 text-slate-300">
-          <strong class="text-cyan-400">J.A.R.V.I.S.:</strong> Selamat datang di sistem, Agen Rizky Aditya Marvel. Ada yang bisa saya bantu terkait protokol pahlawan atau analisis reaktor?
-        </div>
-      </div>
-
-      <div class="flex gap-1.5 mb-2 overflow-x-auto pb-1">
-        <button onclick="sendQuickPrompt('Status Reaktor')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-700 border border-cyan-500/40 rounded-lg text-[10px] text-cyan-300 shrink-0">⚡ Status Reaktor</button>
-        <button onclick="sendQuickPrompt('Siapa Pembuat?')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-700 border border-cyan-500/40 rounded-lg text-[10px] text-cyan-300 shrink-0">👨‍💻 Pembuat Web</button>
-        <button onclick="sendQuickPrompt('Sinyal Darurat')" class="px-2.5 py-1 bg-slate-900 hover:bg-slate-700 border border-cyan-500/40 rounded-lg text-[10px] text-cyan-300 shrink-0">🚨 Info Darurat</button>
-      </div>
-
-      <div class="flex gap-2">
-        <input type="text" id="chatInput" onkeypress="handleChatKey(event)" placeholder="Ketik pesan ke J.A.R.V.I.S...." class="flex-grow px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500">
-        <button onclick="sendUserMessage()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-xl text-xs transition-colors">Kirim</button>
-      </div>
-    </div>
-
-    <!-- 6. Vault Arsip Rahasia Lvl. 10 -->
-    <div id="content-rahasia" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-yellow-500/50 text-left transition-all duration-500">
-      <div id="loginSection">
-        <div class="text-center mb-4">
-          <span class="text-3xl">🔐</span>
-          <h2 class="text-lg font-bold text-yellow-400 mt-1">Akses Vault S.H.I.E.L.D.</h2>
-          <p class="text-[11px] text-slate-400">Masukkan identitas agen untuk membuka arsip tingkat 10.</p>
-        </div>
-        
-        <div class="space-y-3 mb-4">
-          <div>
-            <label class="block text-[11px] text-slate-300 mb-1 font-semibold">Nama Agen:</label>
-            <input type="text" id="agentNameInput" placeholder="cth: Rizky" class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-yellow-500">
+            <label class="block text-slate-300 mb-1 font-medium">Tanggal Kunjungan:</label>
+            <input type="date" id="custDate" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-emerald-500 text-xs">
           </div>
           <div>
-            <label class="block text-[11px] text-slate-300 mb-1 font-semibold">Kode Sandi Akses (Hint: 3000):</label>
-            <input type="password" id="agentPassInput" placeholder="Masukkan kode sandi..." class="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-yellow-500">
+            <label class="block text-slate-300 mb-1 font-medium">Jumlah Orang:</label>
+            <input type="number" id="custCount" placeholder="cth: 5" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-emerald-500">
           </div>
         </div>
 
-        <button onclick="verifyAgentLogin()" class="w-full py-3 bg-yellow-600 hover:bg-yellow-500 text-slate-950 font-bold rounded-xl shadow-lg active:scale-95 transition-all text-xs">
-          Verifikasi & Buka Arsip
+        <div>
+          <label class="block text-slate-300 mb-1 font-medium">Catatan Tambahan:</label>
+          <textarea id="custNotes" rows="2" placeholder="Catatan khusus (opsional)..." class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-emerald-500 text-xs"></textarea>
+        </div>
+
+        <button onclick="sendToWhatsApp()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2">
+          <span>💬</span> Kirim Pesanan ke WhatsApp
         </button>
       </div>
-
-      <div id="classifiedVault" class="hidden space-y-4">
-        <div class="bg-yellow-500/10 border border-yellow-500/40 p-3.5 rounded-xl text-center">
-          <span class="text-2xl">⚡</span>
-          <h3 class="text-sm font-bold text-yellow-400 mt-1">AKSES DITERIMA: LEVEL 10</h3>
-          <p id="welcomeAgentText" class="text-[11px] text-slate-300">Selamat datang, Agen.</p>
-        </div>
-
-        <div class="space-y-3 text-xs text-slate-300">
-          <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-700">
-            <h4 class="font-bold text-blue-300 mb-1">🌌 Hierarki Kosmik & Entitas Abadi</h4>
-            <p class="text-[11px] text-slate-400 leading-relaxed">
-              Di atas para Avengers, terdapat entitas kosmik penguasa multiverse seperti <strong>The Living Tribunal</strong>, <strong>Eternity</strong>, dan para <strong>Watchers</strong> yang mengawasi jalannya waktu di seluruh dimensi.
-            </p>
-          </div>
-
-          <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-700">
-            <h4 class="font-bold text-purple-300 mb-1">🌀 Protokol Perang Multiverse (Secret Wars)</h4>
-            <p class="text-[11px] text-slate-400 leading-relaxed">
-              Tabrakan antar-realitas (*Incursion*) dapat menghancurkan semesta. Teknologi penjelajahan kuantum dan sihir dimensi Dr. Strange adalah garis pertahanan terakhir untuk menjaga kestabilan Earth-616.
-            </p>
-          </div>
-        </div>
-
-        <button onclick="lockVault()" class="w-full py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl text-xs active:scale-95 transition-all">
-          Kunci Kembali Vault
-        </button>
-      </div>
-    </div>
-
-    <!-- 7. Tentang -->
-    <div id="content-tentang" class="tab-content hidden bg-slate-800 p-6 rounded-2xl shadow-xl w-full border border-slate-700 text-left transition-all duration-500">
-      <h2 class="text-xl font-bold mb-3 text-center text-blue-400">Tentang Pengembang</h2>
-      <div class="space-y-2 text-sm text-slate-300 mb-4 bg-slate-900/80 p-4 rounded-xl border border-slate-700">
-        <p><strong class="text-blue-300">Nama:</strong> Rizky Aditya Marvel</p>
-        <p><strong class="text-blue-300">Keahlian:</strong> Teknik Jaringan dan Telekomunikasi</p>
-        <p><strong class="text-blue-300">Email:</strong> rizkymarvell28@gmail.com</p>
-      </div>
-      <p class="text-slate-300 text-xs text-center">Website modern berbasis mobile dengan fitur interaktif lengkap.</p>
-    </div>
+    </section>
 
   </main>
 
-  <!-- Footer -->
-  <footer class="p-4 text-center text-xs text-slate-500">
-    &copy; 2026 Marvel Universe Project
+  <footer class="mt-8 bg-slate-900 border-t border-slate-800 p-4 text-center text-xs text-slate-500 space-y-1">
+    <p class="font-semibold text-slate-400">RINDANG KEBUN JATI</p>
+    <p>&copy; 2026 All Rights Reserved. Crafted for Professional Web Business.</p>
   </footer>
 
-  <!-- Modal Pop-up Selamat Datang -->
-  <div id="welcomeModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300 z-50 p-4">
-    <div id="modalContent" class="bg-slate-900 border border-slate-700 text-white p-6 rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300 max-w-sm w-full text-center">
-      <div class="text-4xl mb-3 animate-bounce">✨</div>
-      <h3 class="text-xl font-bold text-blue-400 mb-2">Status Aktif!</h3>
-      <p class="text-slate-300 text-sm mb-5">Sistem pencarian dan favorit berjalan sempurna.</p>
-      <button onclick="closeModal('welcomeModal', 'modalContent')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-semibold">Tutup</button>
-    </div>
-  </div>
-
-  <!-- Modal Pop-up Detail Karakter -->
-  <div id="detailModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300 z-50 p-4">
-    <div id="detailContent" class="bg-slate-900 border border-slate-700 text-white p-6 rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300 max-w-sm w-full text-center">
-      <img id="detailImg" src="" alt="" class="w-20 h-20 rounded-xl object-cover mx-auto mb-3 border border-slate-700 shadow-lg">
-      <h3 id="detailTitle" class="text-lg font-bold text-blue-400 mb-1"></h3>
-      <p id="detailDesc" class="text-xs text-slate-300 mb-2"></p>
-      <p id="detailPower" class="text-xs text-blue-300 font-semibold mb-5 bg-slate-800 py-1.5 px-3 rounded-lg"></p>
-      <button onclick="closeModal('detailModal', 'detailContent')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-semibold">Kembali</button>
-    </div>
-  </div>
-
-  <!-- Modal Pop-up Arsip Lore Marvel -->
-  <div id="loreModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden opacity-0 transition-opacity duration-300 z-50 p-4">
-    <div id="loreContent" class="bg-slate-900 border border-slate-700 text-white p-6 rounded-2xl shadow-2xl transform scale-90 transition-transform duration-300 max-w-sm w-full text-left">
-      <div class="flex items-center gap-3 mb-3">
-        <span id="loreIcon" class="text-3xl">🏛️</span>
-        <div>
-          <h3 id="loreTitle" class="text-base font-bold text-blue-400">Judul Topik</h3>
-          <p class="text-[10px] text-slate-400">Arsip Resmi Marvel Universe</p>
-        </div>
-      </div>
-      <div class="space-y-2 text-xs text-slate-300 mb-5 bg-slate-800/80 p-3.5 rounded-xl border border-slate-700/80 leading-relaxed">
-        <p><strong>Pengertian:</strong> <span id="loreDefinition">-</span></p>
-        <p><strong>Awal Mula:</strong> <span id="loreOrigin">-</span></p>
-        <p><strong>Info Penting:</strong> <span id="loreExtra">-</span></p>
-      </div>
-      <button onclick="closeModal('loreModal', 'loreContent')" class="w-full py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-xs font-semibold">Tutup Arsip</button>
-    </div>
-  </div>
-
-  <!-- JavaScript Logika & Fitur Lengkap -->
   <script>
-    let favorites = [];
-    let isEmergencyActive = false;
-    let isMultiverseActive = false;
-    let audioCtx = null;
-    let alarmTimer = null;
-
-    let reactorActive = false;
-    let reactorStability = 100;
-    let reactorTimeLeft = 15;
-    let reactorInterval = null;
-
-    // Variabel Mini-Game Arena Perang
-    let battleState = {
-      heroName: "Iron Man",
-      maxHeroHp: 100,
-      heroHp: 100,
-      heroSpecial: "⚡ Repulsor Beam",
-      enemyName: "Thanos",
-      maxEnemyHp: 140,
-      enemyHp: 140,
-      isBattleOver: false
-    };
-
-    function selectHero(name, hp, special) {
-      battleState.heroName = name;
-      battleState.maxHeroHp = hp;
-      battleState.heroHp = hp;
-      battleState.heroSpecial = special;
-      playTone(700, 'sine', 0.1);
-      alert(`Pahlawan dipilih: ${name}!`);
-    }
-
-    function selectVillain(name, hp) {
-      battleState.enemyName = name;
-      battleState.maxEnemyHp = hp;
-      battleState.enemyHp = hp;
-      playTone(600, 'sine', 0.1);
-      alert(`Musuh dipilih: ${name}!`);
-    }
-
-    function startBattle() {
-      document.getElementById('heroSelectArea').classList.add('hidden');
-      document.getElementById('battleActiveArea').classList.remove('hidden');
-      document.getElementById('btnResetBattle').classList.add('hidden');
-      document.getElementById('battleActionButtons').classList.remove('hidden');
-
-      battleState.heroHp = battleState.maxHeroHp;
-      battleState.enemyHp = battleState.maxEnemyHp;
-      battleState.isBattleOver = false;
-
-      document.getElementById('battleHeroName').innerText = battleState.heroName;
-      document.getElementById('battleEnemyName').innerText = battleState.enemyName;
-      
-      updateBattleUI();
-      
-      const log = document.getElementById('battleLog');
-      log.innerHTML = `<p class="text-yellow-400">⚔️ Pertarungan dimulai antara ${battleState.heroName} melawan ${battleState.enemyName}!</p>`;
-      playTone(800, 'triangle', 0.2);
-    }
-
-    function playerAttack(type) {
-      if (battleState.isBattleOver) return;
-
-      let damage = 0;
-      let attackDesc = "";
-
-      if (type === 'light') {
-        damage = Math.floor(Math.random() * 12) + 10;
-        attackDesc = `${battleState.heroName} melancarkan serangan cepat dan memberikan ${damage} damage!`;
-        playTone(900, 'sine', 0.15);
-      } else {
-        damage = Math.floor(Math.random() * 22) + 18;
-        attackDesc = `${battleState.heroName} menggunakan kekuatan ${battleState.heroSpecial} dan menghasilkan ${damage} damage besar!`;
-        playTone(1200, 'sawtooth', 0.25);
-      }
-
-      battleState.enemyHp -= damage;
-      if (battleState.enemyHp < 0) battleState.enemyHp = 0;
-
-      // Efek guncangan musuh
-      const enemyCard = document.getElementById('enemyCard');
-      enemyCard.classList.add('shake-anim');
-      setTimeout(() => enemyCard.classList.remove('shake-anim'), 400);
-
-      updateBattleUI();
-      appendBattleLog(attackDesc, 'text-blue-300');
-
-      if (battleState.enemyHp === 0) {
-        endBattle(true);
-        return;
-      }
-
-      // Giliran Musuh Menyerang (Delay 1 detik)
-      document.getElementById('battleActionButtons').classList.add('hidden');
-      setTimeout(() => {
-        if (battleState.isBattleOver) return;
-        
-        let enemyDamage = Math.floor(Math.random() * 15) + 8;
-        battleState.heroHp -= enemyDamage;
-        if (battleState.heroHp < 0) battleState.heroHp = 0;
-
-        const playerCard = document.getElementById('playerCard');
-        playerCard.classList.add('shake-anim');
-        setTimeout(() => playerCard.classList.remove('shake-anim'), 400);
-
-        updateBattleUI();
-        appendBattleLog(`💥 ${battleState.enemyName} menyerang balik dan memberikan ${enemyDamage} damage!`, 'text-red-400');
-        playTone(300, 'sawtooth', 0.3);
-
-        if (battleState.heroHp === 0) {
-          endBattle(false);
-        } else {
-          document.getElementById('battleActionButtons').classList.remove('hidden');
-        }
-      }, 1000);
-    }
-
-    function updateBattleUI() {
-      document.getElementById('playerHpText').innerText = battleState.heroHp;
-      document.getElementById('enemyHpText').innerText = battleState.enemyHp;
-
-      let playerPercent = (battleState.heroHp / battleState.maxHeroHp) * 100;
-      let enemyPercent = (battleState.enemyHp / battleState.maxEnemyHp) * 100;
-
-      document.getElementById('playerHpBar').style.width = playerPercent + '%';
-      document.getElementById('enemyHpBar').style.width = enemyPercent + '%';
-    }
-
-    function appendBattleLog(text, colorClass) {
-      const log = document.getElementById('battleLog');
-      log.innerHTML += `<p class="${colorClass} mt-1">${text}</p>`;
-      log.scrollTop = log.scrollHeight;
-    }
-
-    function endBattle(isWin) {
-      battleState.isBattleOver = true;
-      document.getElementById('battleActionButtons').classList.add('hidden');
-      document.getElementById('btnResetBattle').classList.remove('hidden');
-
-      if (isWin) {
-        appendBattleLog(`🎉 KEMENANGAN! ${battleState.heroName} berhasil mengalahkan ${battleState.enemyName}!`, 'text-green-400 font-bold');
-        playTone(1400, 'sine', 0.5);
-      } else {
-        appendBattleLog(`💀 KEKALAHAN! ${battleState.heroName} tumbang di tangan ${battleState.enemyName}...`, 'text-red-500 font-bold');
-        playTone(150, 'sawtooth', 0.6);
-      }
-    }
-
-    function resetBattle() {
-      document.getElementById('heroSelectArea').classList.remove('hidden');
-      document.getElementById('battleActiveArea').classList.add('hidden');
-    }
-
-    // Data Ensiklopedia Topik Marvel
-    const loreData = {
-      formation: {
-        icon: "🏛️",
-        title: "Sejarah Pembentukan Marvel",
-        definition: "Penerbit buku komik legendaris dunia yang melahirkan ribuan pahlawan super ikonik.",
-        origin: "Didirikan tahun 1939 oleh Martin Goodman dengan nama awal Timely Comics, sebelum resmi berganti nama menjadi Marvel Comics pada tahun 1961 berkat Stan Lee dan Jack Kirby.",
-        extra: "Memulai era keemasan komik modern lewat penciptaan karakter epik seperti Fantastic Four, Spider-Man, Hulk, X-Men, hingga mendunia lewat Marvel Studios (MCU)."
-      },
-      firstmovie: {
-        icon: "🎬",
-        title: "Film Pertama MCU (Iron Man, 2008)",
-        definition: "Film pembuka dari Marvel Cinematic Universe (MCU) yang mengawali seluruh keterhubungan film pahlawan super.",
-        origin: "Dirilis pada bulan Mei 2008, disutradarai oleh Jon Favreau dan dibintangi oleh Robert Downey Jr. sebagai Tony Stark.",
-        extra: "Sukses besar secara komersial dan kritis, membuktikan bahwa adaptasi komik bisa dikemas dengan gaya realistis, cerdas, dan penuh aksi."
-      },
-      iconicmovie: {
-        icon: "🌟",
-        title: "Film Paling Berkesan (Avengers: Endgame, 2019)",
-        definition: "Klimaks epik dan sangat emosional dari Infinity Saga penutup pertempuran melawan Thanos.",
-        origin: "Disutradarai oleh Anthony dan Joe Russo, menjadi salah satu pencapaian terbesar perfilman dunia dengan pendapatan box office masif.",
-        extra: "Menghadirkan momen paling legendaris dalam sejarah perfilman, termasuk pengorbanan Tony Stark ('I am Iron Man') dan penyatuan seluruh pahlawan."
-      }
-    };
-
-    function openLore(type) {
-      const data = loreData[type];
-      if (!data) return;
-
-      document.getElementById('loreIcon').innerText = data.icon;
-      document.getElementById('loreTitle').innerText = data.title;
-      document.getElementById('loreDefinition').innerText = data.definition;
-      document.getElementById('loreOrigin').innerText = data.origin;
-      document.getElementById('loreExtra').innerText = data.extra;
-
-      playTone(800, 'sine', 0.15);
-
-      const modal = document.getElementById('loreModal');
-      const content = document.getElementById('loreContent');
-      modal.classList.remove('hidden');
-      setTimeout(() => {
-        modal.classList.remove('opacity-0');
-        content.classList.remove('scale-90');
-        content.classList.add('scale-100');
-      }, 10);
-    }
-
-    // Logika J.A.R.V.I.S. Chat Bot
-    function sendQuickPrompt(promptText) {
-      document.getElementById('chatInput').value = promptText;
-      sendUserMessage();
-    }
-
-    function handleChatKey(e) {
-      if (e.key === 'Enter') {
-        sendUserMessage();
-      }
-    }
-
-    function sendUserMessage() {
-      const input = document.getElementById('chatInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const chatLog = document.getElementById('chatLog');
-      
-      chatLog.innerHTML += `
-        <div class="bg-blue-950/80 p-2.5 rounded-lg border border-blue-800 text-blue-200 text-right">
-          <strong class="text-blue-400">Anda:</strong> ${text}
-        </div>
-      `;
-      input.value = "";
-      chatLog.scrollTop = chatLog.scrollHeight;
-      playTone(900, 'sine', 0.1);
-
-      setTimeout(() => {
-        let reply = "Perintah diterima, Agen. Analisis data jaringan dan protokol keamanan sedang berjalan.";
-        const lower = text.toLowerCase();
-
-        if (lower.includes('reaktor') || lower.includes('reactor')) {
-          reply = reactorActive ? `⚠️ Reaktor Arc sedang diuji! Stabilitas saat ini berada di angka ${reactorStability}%. Segera stabilkan!` : "✅ Inti Reaktor Arc dalam kondisi aman dan stabil 100%.";
-        } else if (lower.includes('pembuat') || lower.includes('rizky') || lower.includes('siapa')) {
-          reply = "Sistem mengonfirmasi website ini dirancang oleh Agen Rizky Aditya Marvel, ahli di bidang Teknik Jaringan dan Telekomunikasi.";
-        } else if (lower.includes('darurat') || lower.includes('emergency')) {
-          reply = isEmergencyActive ? "🚨 Peringatan darurat S.H.I.E.L.D. sedang aktif!" : "Situasi wilayah terpantau aman terkendali. Tidak ada ancaman aktif.";
-        } else if (lower.includes('halo') || lower.includes('hi') || lower.includes('jarvis')) {
-          reply = "Salam hormat, Agen Rizky. Semua sistem Stark Industries beroperasi secara optimal.";
-        } else if (lower.includes('multiverse') || lower.includes('portal')) {
-          reply = isMultiverseActive ? "🌀 Portal Multiverse sedang terbuka! Hati-hati terhadap fluktuasi dimensi." : "Dimensi utama (Earth-616) stabil.";
-        }
-
-        chatLog.innerHTML += `
-          <div class="bg-slate-800 p-2.5 rounded-lg border border-slate-700 text-slate-300">
-            <strong class="text-cyan-400">J.A.R.V.I.S.:</strong> ${reply}
-          </div>
-        `;
-        chatLog.scrollTop = chatLog.scrollHeight;
-        playTone(1100, 'sine', 0.15);
-      }, 500);
-    }
-
-    // Fungsi Login Agen & Vault Lvl 10
-    function verifyAgentLogin() {
-      const name = document.getElementById('agentNameInput').value.trim();
-      const pass = document.getElementById('agentPassInput').value.trim();
-
-      if (!name) {
-        alert("⚠️ Masukkan nama agen terlebih dahulu!");
-        return;
-      }
-
-      if (pass === "3000" || pass === "1963" || pass === "marvel") {
-        playTone(1000, 'sine', 0.3);
-        document.getElementById('loginSection').classList.add('hidden');
-        document.getElementById('classifiedVault').classList.remove('hidden');
-        document.getElementById('welcomeAgentText').innerText = `Selamat datang, Agen ${name}. Otoritas Level 10 diaktifkan.`;
-        alert(`🔓 AKSES DIBERIKAN: Selamat datang di Arsip Rahasia Utama, Agent ${name}!`);
-      } else {
-        playTone(200, 'sawtooth', 0.4);
-        alert("❌ KODE SANDI SALAH! Gunakan kode hint '3000' untuk masuk.");
-      }
-    }
-
-    function lockVault() {
-      document.getElementById('loginSection').classList.remove('hidden');
-      document.getElementById('classifiedVault').classList.add('hidden');
-      document.getElementById('agentPassInput').value = "";
-      alert("🔒 Vault berhasil dikunci kembali.");
-    }
-
-    // Efek Sentuhan Reaktor (Ripple Effect)
     document.addEventListener('click', function(e) {
-      createStarkRipple(e.clientX, e.clientY);
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple';
+      ripple.style.left = e.clientX + 'px';
+      ripple.style.top = e.clientY + 'px';
+      document.body.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 500);
     });
 
-    document.addEventListener('touchstart', function(e) {
-      if (e.touches && e.touches[0]) {
-        createStarkRipple(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    }, { passive: true });
+    function sendToWhatsApp() {
+      const name = document.getElementById('custName').value.trim();
+      const service = document.getElementById('custService').value;
+      const date = document.getElementById('custDate').value;
+      const count = document.getElementById('custCount').value;
+      const notes = document.getElementById('custNotes').value.trim();
 
-    function createStarkRipple(x, y) {
-      const ripple = document.createElement('div');
-      ripple.className = 'stark-ripple';
-      ripple.style.left = x + 'px';
-      ripple.style.top = y + 'px';
-      document.body.appendChild(ripple);
-      
-      setTimeout(() => {
-        ripple.remove();
-      }, 600);
-    }
-
-    function switchTab(tabName) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('nav button').forEach(btn => {
-        btn.classList.remove('text-blue-400', 'font-bold', 'text-purple-400', 'text-yellow-400', 'text-cyan-400', 'text-red-400');
-        btn.classList.add('text-slate-300');
-      });
-      document.getElementById('content-' + tabName).classList.remove('hidden');
-      const activeBtn = document.getElementById('btn-' + tabName);
-      activeBtn.classList.remove('text-slate-300');
-      
-      if (tabName === 'rahasia') {
-        activeBtn.classList.add('text-yellow-400', 'font-bold');
-      } else if (tabName === 'jarvis') {
-        activeBtn.classList.add('text-cyan-400', 'font-bold');
-      } else if (tabName === 'arena') {
-        activeBtn.classList.add('text-red-400', 'font-bold');
-      } else if (isMultiverseActive) {
-        activeBtn.classList.add('text-purple-400', 'font-bold');
-      } else {
-        activeBtn.classList.add('text-blue-400', 'font-bold');
-      }
-    }
-
-    function filterCharacters() {
-      let query = document.getElementById('searchInput').value.toLowerCase();
-      document.querySelectorAll('.char-card').forEach(card => {
-        let name = card.getAttribute('data-name');
-        card.style.display = name.includes(query) ? "flex" : "none";
-      });
-    }
-
-    function showDetail(title, desc, power, imgUrl) {
-      document.getElementById('detailTitle').innerText = title;
-      document.getElementById('detailDesc').innerText = desc;
-      document.getElementById('detailPower').innerText = power;
-      document.getElementById('detailImg').src = imgUrl;
-
-      const modal = document.getElementById('detailModal');
-      const content = document.getElementById('detailContent');
-      modal.classList.remove('hidden');
-      setTimeout(() => {
-        modal.classList.remove('opacity-0');
-        content.classList.remove('scale-90');
-        content.classList.add('scale-100');
-      }, 10);
-    }
-
-    function addFavorite(charName) {
-      if (!favorites.includes(charName)) {
-        favorites.push(charName);
-        updateFavoritesUI();
-        alert(charName + " berhasil ditambahkan ke Favorit! ⭐");
-      } else {
-        alert(charName + " sudah ada di daftar Favorit.");
-      }
-    }
-
-    function updateFavoritesUI() {
-      let listContainer = document.getElementById('favoriteList');
-      if (favorites.length === 0) {
-        listContainer.innerHTML = `<p class="text-slate-400 text-xs text-center py-4">Belum ada karakter favorit. Tambahkan dari menu Karakter!</p>`;
+      if (!name || !date || !count) {
+        alert("⚠️ Mohon isi Nama, Tanggal Kunjungan, dan Jumlah Orang terlebih dahulu!");
         return;
       }
-      listContainer.innerHTML = "";
-      favorites.forEach(fav => {
-        listContainer.innerHTML += `
-          <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 flex justify-between items-center text-xs">
-            <span class="font-bold text-blue-300">⭐ ${fav}</span>
-            <span class="text-slate-400 text-[10px]">Tersimpan</span>
-          </div>`;
-      });
-    }
 
-    function playTone(freq, type = 'sine', duration = 0.2) {
-      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      try {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = type;
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + duration);
-      } catch (e) {}
-    }
+      const adminPhone = "6288210682050"; 
+      const message = `Halo Rindang Kebun Jati,%0A%0ASaya ingin melakukan pemesanan/reservasi:%0A- Nama: *${name}*%0A- Layanan: *${service}*%0A- Tanggal: *${date}*%0A- Jumlah: *${count} orang*%0A- Catatan: ${notes || '-'}%0A%0AMohon konfirmasinya, terima kasih!`;
 
-    function toggleEmergencySignal() {
-      const body = document.getElementById('mainBody');
-      const text = document.getElementById('emergencyText');
-      
-      isEmergencyActive = !isEmergencyActive;
-      if (isEmergencyActive) {
-        body.classList.add('emergency-active');
-        text.innerText = "Matikan Sinyal Darurat";
-        playTone(700, 'sawtooth', 0.25);
-        alarmTimer = setInterval(() => {
-          if (isEmergencyActive) playTone(700, 'sawtooth', 0.25);
-        }, 450);
-        alert("🚨 PERINGATAN: Sinyal darurat S.H.I.E.L.D. aktif!");
-      } else {
-        body.classList.remove('emergency-active');
-        text.innerText = "Kirim Sinyal Darurat";
-        clearInterval(alarmTimer);
-        alert("✅ Situasi kembali aman.");
-      }
-    }
-
-    function toggleMultiversePortal() {
-      const body = document.getElementById('mainBody');
-      const text = document.getElementById('multiverseText');
-      const title = document.getElementById('mainTitle');
-      
-      isMultiverseActive = !isMultiverseActive;
-      playTone(600, 'sine', 0.6);
-
-      if (isMultiverseActive) {
-        body.classList.add('multiverse-realm');
-        text.innerText = "Tutup Portal Multiverse";
-        title.innerText = "MARVEL MULTIVERSE";
-        alert("🌀 PORTAL TERBUKA: Dimensi alternatif kosmik pahlawan Marvel aktif!");
-      } else {
-        body.classList.remove('multiverse-realm');
-        text.innerText = "Buka Portal Multiverse";
-        title.innerText = "MARVEL UNIVERSE";
-        alert("✨ Stabilisasi berhasil. Kembali ke Dimensi Utama (Earth-616).");
-      }
-    }
-
-    function startReactorGame() {
-      if (reactorActive) return;
-      reactorActive = true;
-      reactorStability = 60;
-      reactorTimeLeft = 15;
-      
-      document.getElementById('reactorGameArea').classList.remove('hidden');
-      document.getElementById('btnStartReactor').classList.add('hidden');
-      document.getElementById('btnTapReactor').classList.remove('hidden');
-      
-      updateReactorUI();
-      playTone(400, 'triangle', 0.2);
-
-      reactorInterval = setInterval(() => {
-        reactorTimeLeft--;
-        reactorStability -= 7;
-        
-        if (reactorStability <= 0) {
-          reactorStability = 0;
-          endReactorGame(false);
-        } else if (reactorTimeLeft <= 0) {
-          endReactorGame(true);
-        } else {
-          updateReactorUI();
-        }
-      }, 1000);
-    }
-
-    function tapReactor() {
-      if (!reactorActive) return;
-      reactorStability += 12;
-      if (reactorStability > 100) reactorStability = 100;
-      playTone(900, 'triangle', 0.1);
-      updateReactorUI();
-    }
-
-    function updateReactorUI() {
-      const bar = document.getElementById('reactorBar');
-      bar.style.width = reactorStability + '%';
-      document.getElementById('reactorTimerText').innerText = `Waktu: ${reactorTimeLeft}s`;
-      
-      const statusText = document.getElementById('reactorStatusText');
-      if (reactorStability > 60) {
-        bar.className = "bg-green-400 h-full transition-all duration-150";
-        statusText.innerText = "Status: AMAN";
-        statusText.className = "text-green-400 font-semibold";
-      } else if (reactorStability > 25) {
-        bar.className = "bg-yellow-400 h-full transition-all duration-150";
-        statusText.innerText = "Status: PERINGATAN";
-        statusText.className = "text-yellow-400 font-semibold";
-      } else {
-        bar.className = "bg-red-500 h-full transition-all duration-150 animate-pulse";
-        statusText.innerText = "Status: KRITIS!";
-        statusText.className = "text-red-500 font-bold";
-      }
-    }
-
-    function endReactorGame(success) {
-      reactorActive = false;
-      clearInterval(reactorInterval);
-      
-      document.getElementById('btnStartReactor').classList.remove('hidden');
-      document.getElementById('btnTapReactor').classList.add('hidden');
-      
-      if (success) {
-        playTone(1200, 'sine', 0.4);
-        alert("🎉 LUAR BIASA! Reaktor Arc berhasil distabilkan, sistem Stark aman!");
-        document.getElementById('reactorStatusText').innerText = "Status: BERHASIL";
-        document.getElementById('reactorStatusText').className = "text-green-400 font-bold";
-      } else {
-        playTone(120, 'sawtooth', 0.6);
-        triggerExplosionEffect();
-        document.getElementById('reactorStatusText').innerText = "Status: OVERLOAD";
-        document.getElementById('reactorStatusText').className = "text-red-500 font-bold";
-      }
-    }
-
-    function triggerExplosionEffect() {
-      const body = document.getElementById('mainBody');
-      body.classList.add('explosion-active');
-
-      const blastOverlay = document.createElement('div');
-      blastOverlay.id = 'blastOverlay';
-      blastOverlay.className = 'fixed inset-0 bg-red-900/60 backdrop-blur-sm flex items-center justify-center z-50 transition-all duration-300';
-      blastOverlay.innerHTML = `
-        <div class="text-center transform scale-75 animate-bounce transition-transform duration-300 p-6 bg-slate-900/90 border-2 border-red-500 rounded-2xl shadow-2xl mx-4">
-          <div class="text-6xl mb-2 animate-pulse">💥</div>
-          <h2 class="text-xl font-black text-red-500 tracking-wider mb-1">REACTOR OVERLOAD!</h2>
-          <p class="text-xs text-slate-300">Inti reaktor meledak! Sistem pengamanan Stark aktif.</p>
-        </div>
-      `;
-      document.body.appendChild(blastOverlay);
-
-      setTimeout(() => {
-        body.classList.remove('explosion-active');
-        if (blastOverlay) blastOverlay.remove();
-      }, 1300);
-    }
-
-    function showWelcome() {
-      const modal = document.getElementById('welcomeModal');
-      const content = document.getElementById('modalContent');
-      modal.classList.remove('hidden');
-      setTimeout(() => {
-        modal.classList.remove('opacity-0');
-        content.classList.remove('scale-90');
-        content.classList.add('scale-100');
-      }, 10);
-    }
-
-    function closeModal(modalId, contentId) {
-      const modal = document.getElementById(modalId);
-      const content = document.getElementById(contentId);
-      modal.classList.add('opacity-0');
-      content.classList.remove('scale-100');
-      content.classList.add('scale-90');
-      setTimeout(() => {
-        modal.classList.add('hidden');
-      }, 300);
+      const waUrl = `https://wa.me/${adminPhone}?text=${message}`;
+      window.open(waUrl, '_blank');
     }
   </script>
 </body>
