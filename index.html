@@ -28,23 +28,27 @@
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between font-sans">
 
+  <!-- Header / Navbar -->
   <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-emerald-500/30 px-4 py-3">
     <div class="max-w-md mx-auto flex justify-between items-center">
       <a href="#" class="font-bold text-base text-emerald-400 flex items-center gap-1.5">
         <span>🌳</span> Rindang Kebun Jati
       </a>
-      <nav class="flex gap-3 text-xs font-medium text-slate-300">
+      <nav class="flex gap-2.5 text-xs font-medium text-slate-300">
         <a href="#beranda" class="hover:text-emerald-400 transition-colors">Beranda</a>
         <a href="#layanan" class="hover:text-emerald-400 transition-colors">Layanan</a>
+        <a href="#galeri" class="hover:text-emerald-400 transition-colors">Galeri</a>
         <a href="#reservasi" class="hover:text-emerald-400 transition-colors">Reservasi</a>
       </nav>
     </div>
   </header>
 
+  <!-- Konten Utama -->
   <main class="max-w-md mx-auto w-full p-4 space-y-6 flex-grow">
     
+    <!-- 1. Hero Section -->
     <section id="beranda" class="relative rounded-3xl overflow-hidden border border-emerald-500/30 bg-slate-900 shadow-2xl p-6 text-center">
-      <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800');"></div>
+      <div class="absolute inset-0 opacity-30 bg-cover bg-center" style="background-image: url('foto1.jpg');"></div>
       <div class="relative z-10 space-y-3 py-4">
         <span class="inline-block px-3 py-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[10px] font-bold rounded-full uppercase tracking-wider">
           🌿 Ekowisata & Kuliner Asri
@@ -59,13 +63,14 @@
           <a href="#reservasi" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-xs shadow-lg transition-all active:scale-95">
             Pesan Tempat Sekarang
           </a>
-          <a href="#layanan" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-xl text-xs transition-all active:scale-95">
-            Lihat Menu
+          <a href="#galeri" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-xl text-xs transition-all active:scale-95">
+            Lihat Galeri
           </a>
         </div>
       </div>
     </section>
 
+    <!-- 2. Layanan & Fasilitas -->
     <section id="layanan" class="space-y-3">
       <h2 class="text-sm font-bold text-emerald-400 flex items-center gap-2">
         <span>✨</span> Fasilitas & Layanan Unggulan
@@ -95,6 +100,28 @@
       </div>
     </section>
 
+    <!-- 3. Galeri Foto Asli Suasana Lokasi -->
+    <section id="galeri" class="space-y-3">
+      <h2 class="text-sm font-bold text-emerald-400 flex items-center gap-2">
+        <span>🖼️</span> Galeri Suasana & Lokasi
+      </h2>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="rounded-2xl overflow-hidden border border-emerald-500/30 bg-slate-900 shadow-md">
+          <img src="foto1.jpg" alt="Gerbang Warkop Rindang Kebun Jati" class="w-full h-36 object-cover hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="rounded-2xl overflow-hidden border border-emerald-500/30 bg-slate-900 shadow-md">
+          <img src="foto2.jpg" alt="Area Tempat Duduk & Cafe" class="w-full h-36 object-cover hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="rounded-2xl overflow-hidden border border-emerald-500/30 bg-slate-900 shadow-md">
+          <img src="foto3.jpg" alt="Pemandangan Luas Kebun Jati" class="w-full h-36 object-cover hover:scale-105 transition-transform duration-300">
+        </div>
+        <div class="rounded-2xl overflow-hidden border border-emerald-500/30 bg-slate-900 shadow-md">
+          <img src="foto4.jpg" alt="Suasana Malam Hari" class="w-full h-36 object-cover hover:scale-105 transition-transform duration-300">
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Form Reservasi / Order WhatsApp -->
     <section id="reservasi" class="bg-slate-900 border border-emerald-500/40 p-5 rounded-3xl space-y-4 shadow-xl">
       <div class="text-center space-y-1">
         <h2 class="text-base font-bold text-emerald-400">📝 Form Reservasi & Pemesanan</h2>
@@ -141,12 +168,15 @@
 
   </main>
 
+  <!-- Footer -->
   <footer class="mt-8 bg-slate-900 border-t border-slate-800 p-4 text-center text-xs text-slate-500 space-y-1">
     <p class="font-semibold text-slate-400">RINDANG KEBUN JATI</p>
     <p>&copy; 2026 All Rights Reserved. Crafted for Professional Web Business.</p>
   </footer>
 
+  <!-- JavaScript Interaktif -->
   <script>
+    // Efek Ripple saat layar disentuh
     document.addEventListener('click', function(e) {
       const ripple = document.createElement('div');
       ripple.className = 'ripple';
@@ -156,6 +186,7 @@
       setTimeout(() => ripple.remove(), 500);
     });
 
+    // Fungsi Kirim ke WhatsApp Otomatis ke nomor 088210682050
     function sendToWhatsApp() {
       const name = document.getElementById('custName').value.trim();
       const service = document.getElementById('custService').value;
